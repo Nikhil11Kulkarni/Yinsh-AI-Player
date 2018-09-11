@@ -1,12 +1,11 @@
-
-
-#ifndef CONFERENCE_H
-#define	CONFERENCE_H
+#ifndef BOARD_H_
+#define	BOARD_H_
 
 #include<iostream>
 #include<fstream>
 using namespace std;
 
+/// I HAVE CHANGED SOMEWHAT IN BOARD.H --ONLY SYNTACTICAL CHANGES (NO LOGICAL CHANGE)
 
 class Board{
 
@@ -59,6 +58,8 @@ public:
 
 
 
-}
+};
+
+#endif
 
 

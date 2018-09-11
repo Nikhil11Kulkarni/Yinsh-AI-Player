@@ -55,7 +55,7 @@ Board::Board ( )
 
 }
 
-Board::Board ( int sessionsInTrack )
+Board::Board ( int boardSize , int numberofRings) //I've changed this a bit.
 {
     this->sessionsInTrack = sessionsInTrack;
     sessions = ( Session * ) malloc ( sizeof (Session ) * sessionsInTrack );
@@ -83,7 +83,7 @@ void Board::moveRing(int ringcolor, int from_x,int form-y, int to_x,int to_y){
 
 	if(from_x == to_x){
 		int miy = from_y,mxy  = to_y;
-		if(from_y>to_y){miy = to_y; mxy = from_y}  
+		if(from_y>to_y){miy = to_y; mxy = from_y;}  
 		for(int i = miy+1; i< mxy ;i++){
 			if (boardArray[from_x][i] != -1 ) boardArray[from_x][i] = 5-boardArray[from_x][i]; // CHECK THIS IF CONDITION
 		}
@@ -91,7 +91,7 @@ void Board::moveRing(int ringcolor, int from_x,int form-y, int to_x,int to_y){
 
 	else if(from_y == to_y){
 		int mix = from_x,mxx  = to_x;
-		if(from_x>to_x){mix = to_x; mxx = from_x}  
+		if(from_x>to_x){mix = to_x; mxx = from_x;}  
 		for(int i = mix+1; i< mxx ;i++){
 			if (boardArray[i][from_y] != -1 ) boardArray[i][from_y] = 5-boardArray[i][from_y]; 
 		}
