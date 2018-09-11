@@ -40,7 +40,7 @@ public:
      * to move the position of a ring on the board, and set the board accordingly.
      * 
      */
-	void moveRing(int ringcolor, int from-x,int form-y, int to-x,int to-y);
+	void moveRing(int ringcolor, int from_x,int from_y, int to_x,int to_y);
 
 	/**
      * to remove a ring from the board, and set the board accordingly.
