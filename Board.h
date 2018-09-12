@@ -1,11 +1,21 @@
-#ifndef BOARD_H_
-#define	BOARD_H_
+
+
+#ifndef BOARD_H
+#define	BOARD_H
 
 #include<iostream>
 #include<fstream>
 using namespace std;
 
-/// I HAVE CHANGED SOMEWHAT IN BOARD.H --ONLY SYNTACTICAL CHANGES (NO LOGICAL CHANGE)
+class Point{
+	int x;
+	int y;
+	public:
+	int getx();
+	int gety();
+	void setx(int x1);
+	void sety(int y1);
+}
 
 class Board{
 
@@ -23,11 +33,14 @@ public:
 
 	Board( int boardsize);
 
+	Point twod_from_hex (Point p);
+	
+	Point hex_from_twod (Point p);
+
 	/**
      * to set the position of a ring on the board.
      * 
      */
-
 	/**
      * -1 :  empty , 0 : whitering , 1 :blackring , 2 : whitemarker , 3 : blackmarker  
      * 
@@ -40,7 +53,7 @@ public:
      * to move the position of a ring on the board, and set the board accordingly.
      * 
      */
-	void moveRing(int ringcolor, int from_x,int from_y, int to_x,int to_y);
+	void moveRing(int ringcolor, int from-x,int form-y, int to-x,int to-y);
 
 	/**
      * to remove a ring from the board, and set the board accordingly.
@@ -58,8 +71,10 @@ public:
 
 
 
-};
+}
 
-#endif
+
+
+#endif	/* BOARD_H */
 
 
