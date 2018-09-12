@@ -3,6 +3,41 @@
 #include "Board.h"
 
 
+
+// class Point{
+// 	int x;
+// 	int y;
+// 	public:
+// 	int getx(){
+// 		return this.x;
+// 	}
+// 	int gety(){
+// 		return this.x;	
+// 	}
+// 	void setx(int x1){
+// 		this.x = x1;
+// 	}
+// 	void sety(int y1){
+// 		this.y = y1;
+// 	}
+
+// }
+
+
+int Point::getx(){
+		return this.x;
+	}
+int Point::gety(){
+		return this.x;	
+	}
+void Point::setx(int x1){
+		this.x = x1;
+	}
+void Point::sety(int y1){
+		this.y = y1;
+	}
+
+
 Board::Board ( )
 {	
 
@@ -73,7 +108,7 @@ void Board::setRing(int ringcolor,int px, int py){
 }
 
 
-void Board::moveRing(int ringcolor, int from_x,int form-y, int to_x,int to_y){
+void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 
 	// 	ASSUMING THAT THE TO AND FROM COORDINATES ARE VALID.
 	boardArray[from_x][from_y] == ringcolor +2;
@@ -83,7 +118,7 @@ void Board::moveRing(int ringcolor, int from_x,int form-y, int to_x,int to_y){
 
 	if(from_x == to_x){
 		int miy = from_y,mxy  = to_y;
-		if(from_y>to_y){miy = to_y; mxy = from_y}  
+		if(from_y>to_y){miy = to_y; mxy = from_y;}  
 		for(int i = miy+1; i< mxy ;i++){
 			if (boardArray[from_x][i] != -1 ) boardArray[from_x][i] = 5-boardArray[from_x][i]; // CHECK THIS IF CONDITION
 		}
@@ -91,7 +126,7 @@ void Board::moveRing(int ringcolor, int from_x,int form-y, int to_x,int to_y){
 
 	else if(from_y == to_y){
 		int mix = from_x,mxx  = to_x;
-		if(from_x>to_x){mix = to_x; mxx = from_x}  
+		if(from_x>to_x){mix = to_x; mxx = from_x;}  
 		for(int i = mix+1; i< mxx ;i++){
 			if (boardArray[i][from_y] != -1 ) boardArray[i][from_y] = 5-boardArray[i][from_y]; 
 		}
@@ -116,7 +151,63 @@ void Board::moveRing(int ringcolor, int from_x,int form-y, int to_x,int to_y){
 }
 
 
+Point Board::twod_from_hex (Point p){
+		int h = p.x;  // the hexagon number. center point is hexagon numbered 0.
+		int c = p.y;  // the point clockwise, first being 0.
+		Point twod;
+		if(c <= h){
+			twod.setx(6+c);
+			twod.sety(6+h);
+		}
+		else if(c<=2*h){
+			twod.setx(6+h);
+			twod.sety(6+2*h-c);
+		}
+		else if(c<=3*h){
+			twod.set(6+3*h-c);
+			twod.sety(6-h+3*h-c);
+		}
+		else if(c<=4*h){
+			twod.setx(6-(c-3*h));
+			twod.sety(6-h);
+		}
+		else if(c<=5*h){
+			twod.setx(6-h);
+			twod.sety(6-h+c-4*h);
+		}
+		else{
+			twod.setx(6-h+c-5*h);
+			twod.sety(6+c-5*h);
+		}
 
+}
+
+
+Point Board::hex_from_twod (Point p){
+	int px = p.getx();
+	int py = p.gety();
+	int h = max(abs(px-6),abs(py-6));  
+	int c;
+	if(py == 6+h){
+		c=px-6;	
+	}
+	else if(px == 6+h){
+		c = 2*h - (py-6);
+	}
+	else if(py == 6-h){
+		c = 3*h + 6-px; 
+	}
+	else if(px == 6-h ){
+		c= 5*h - (6-py);
+	}
+	else if(px >= 6 && py <= 6){
+		c= 3*h - (px-6);
+	}
+	else if(px <= 6 && py >= 6){
+		c= 6*h - (6-px);
+	}
+	
+}
 
 
 void Board::getNeighbours(int px,int py, int ringcolor){
