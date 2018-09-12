@@ -47,20 +47,21 @@ public:
      */
 
 
-	void setRing(int ringcolor,int px, int py);
+	void setRing(int ringcolor,int px, int py);// ringid , hexagon , position
 
 	/**
      * to move the position of a ring on the board, and set the board accordingly.
      * 
      */
-	void moveRing(int ringcolor, int from-x,int form-y, int to-x,int to-y);
+	void moveRing(int ringcolor, int from_x,int from_y, int to_x,int to_y);
 
 	/**
      * to remove a ring from the board, and set the board accordingly.
      * 
      */
-	void removeRing(int ringcolor,int px, int py);
-	
+	void removeRing(int opponentID ,int from_x ,int from_y ,int  to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
+	// from_x , from_y to to_x to_y ==remove markers here of colour (opponentID+2).
+	// remove ring from ring_removeX , ring_removeY
 	/**
      * to calculate the evaluation function.
      * 
