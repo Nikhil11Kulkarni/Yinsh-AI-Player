@@ -15,11 +15,19 @@ class Point{
 	int gety();
 	void setx(int x1);
 	void sety(int y1);
-};
+} ;
+
+
+Point twod_from_hex (Point p);
+	
+Point hex_from_twod (Point p);
 
 class Board{
+	public:
+	int boardsize = 11;
+	int boardArray [11] [11];
+    bool validArray [11] [11];
 
-public:
 	/**
      * Constructor : Creates the empty board with default size corresponding to 5 rings
      * 
@@ -47,7 +55,7 @@ public:
      */
 
 
-	void setRing(int ringcolor,int px, int py);// ringid , hexagon , position
+	void setRing(int ringcolor,int px, int py);
 
 	/**
      * to move the position of a ring on the board, and set the board accordingly.
@@ -59,9 +67,8 @@ public:
      * to remove a ring from the board, and set the board accordingly.
      * 
      */
-	void removeRing(int opponentID ,int from_x ,int from_y ,int  to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
-	// from_x , from_y to to_x to_y ==remove markers here of colour (opponentID+2).
-	// remove ring from ring_removeX , ring_removeY
+ 	void removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
+	
 	/**
      * to calculate the evaluation function.
      * 
@@ -72,8 +79,8 @@ public:
 
 
 
-};
-
+}
+;
 
 
 #endif	/* BOARD_H */

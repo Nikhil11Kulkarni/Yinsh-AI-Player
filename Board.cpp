@@ -25,24 +25,95 @@
 
 
 int Point::getx(){
-		return this.x;
+		return this->x;
 	}
 int Point::gety(){
-		return this.x;	
+		return this->y;	
 	}
 void Point::setx(int x1){
-		this.x = x1;
+		this->x = x1;
 	}
 void Point::sety(int y1){
-		this.y = y1;
+		this->y = y1;
 	}
+
+
+
+
+Point twod_from_hex (Point p){
+		int h = p.getx();  // the hexagon number. center point is hexagon numbered 0.
+		int c = p.gety();  // the point clockwise, first being 0.
+		Point twod;
+		if(c <= h){
+			twod.setx(5+c);
+			twod.sety(5+h);
+		}
+		else if(c<=2*h){
+			twod.setx(5+h);
+			twod.sety(5+2*h-c);
+		}
+		else if(c<=3*h){
+			twod.setx(5+3*h-c);
+			twod.sety(5-h+3*h-c);
+		}
+		else if(c<=4*h){
+			twod.setx(5-(c-3*h));
+			twod.sety(5-h);
+		}
+		else if(c<=5*h){
+			twod.setx(5-h);
+			twod.sety(5-h+c-4*h);
+		}
+		else{
+			twod.setx(5-h+c-5*h);
+			twod.sety(5+c-5*h);
+		}
+
+	// Point out;
+	// out.setx(h);
+	// out.sety(c);
+	return twod;
+
+}
+
+
+Point hex_from_twod (Point p){
+	int px = p.getx();
+	int py = p.gety();
+	int h = max(abs(px-5),abs(py-5));  
+	int c;
+
+	if(py == 5+h){
+		c=px-5;	
+	}
+	else if(px == 5+h){
+		c = 2*h - (py-5);
+	}
+	else if(py == 5-h){
+		c = 3*h + 5-px; 
+	}
+	else if(px == 5-h ){
+		c= 5*h - (5-py);
+	}
+	else if(px >= 5 && py <= 5){
+		c= 3*h - (px-5);
+	}
+	else if(px <= 5 && py >= 5){
+		c= 6*h - (5-px);
+	}
+	Point out;
+	out.setx(h);
+	out.sety(c);
+	return out;
+}
+
 
 
 Board::Board ( )
 {	
 
-    int boardArray [11] [11];
-    bool validArray [11] [11];
+    // int boardArray [11] [11];
+    // bool validArray [11] [11];
 
     // refer to the coordinate system : a,b,c... are represented by the first dimension of the array.
     for(int i = 0;i<=10;i++){
@@ -90,11 +161,11 @@ Board::Board ( )
 
 }
 
-Board::Board ( int sessionsInTrack )
-{
-    this->sessionsInTrack = sessionsInTrack;
-    sessions = ( Session * ) malloc ( sizeof (Session ) * sessionsInTrack );
-}
+// Board::Board ( int sessionsInTrack )
+// {
+//     this->sessionsInTrack = sessionsInTrack;
+//     sessions = ( Session * ) malloc ( sizeof (Session ) * sessionsInTrack );
+// }
 
 
 
@@ -152,33 +223,38 @@ void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 
 
 Point Board::twod_from_hex (Point p){
-		int h = p.x;  // the hexagon number. center point is hexagon numbered 0.
-		int c = p.y;  // the point clockwise, first being 0.
+		int h = p.getx();  // the hexagon number. center point is hexagon numbered 0.
+		int c = p.gety();  // the point clockwise, first being 0.
 		Point twod;
 		if(c <= h){
-			twod.setx(6+c);
-			twod.sety(6+h);
+			twod.setx(5+c);
+			twod.sety(5+h);
 		}
 		else if(c<=2*h){
-			twod.setx(6+h);
-			twod.sety(6+2*h-c);
+			twod.setx(5+h);
+			twod.sety(5+2*h-c);
 		}
 		else if(c<=3*h){
-			twod.set(6+3*h-c);
-			twod.sety(6-h+3*h-c);
+			twod.setx(5+3*h-c);
+			twod.sety(5-h+3*h-c);
 		}
 		else if(c<=4*h){
-			twod.setx(6-(c-3*h));
-			twod.sety(6-h);
+			twod.setx(5-(c-3*h));
+			twod.sety(5-h);
 		}
 		else if(c<=5*h){
-			twod.setx(6-h);
-			twod.sety(6-h+c-4*h);
+			twod.setx(5-h);
+			twod.sety(5-h+c-4*h);
 		}
 		else{
-			twod.setx(6-h+c-5*h);
-			twod.sety(6+c-5*h);
+			twod.setx(5-h+c-5*h);
+			twod.sety(5+c-5*h);
 		}
+
+	// Point out;
+	// out.setx(h);
+	// out.sety(c);
+	return twod;
 
 }
 
@@ -186,27 +262,31 @@ Point Board::twod_from_hex (Point p){
 Point Board::hex_from_twod (Point p){
 	int px = p.getx();
 	int py = p.gety();
-	int h = max(abs(px-6),abs(py-6));  
+	int h = max(abs(px-5),abs(py-5));  
 	int c;
-	if(py == 6+h){
-		c=px-6;	
+
+	if(py == 5+h){
+		c=px-5;	
 	}
-	else if(px == 6+h){
-		c = 2*h - (py-6);
+	else if(px == 5+h){
+		c = 2*h - (py-5);
 	}
-	else if(py == 6-h){
-		c = 3*h + 6-px; 
+	else if(py == 5-h){
+		c = 3*h + 5-px; 
 	}
-	else if(px == 6-h ){
-		c= 5*h - (6-py);
+	else if(px == 5-h ){
+		c= 5*h - (5-py);
 	}
-	else if(px >= 6 && py <= 6){
-		c= 3*h - (px-6);
+	else if(px >= 5 && py <= 5){
+		c= 3*h - (px-5);
 	}
-	else if(px <= 6 && py >= 6){
-		c= 6*h - (6-px);
+	else if(px <= 5 && py >= 5){
+		c= 6*h - (5-px);
 	}
-	
+	Point out;
+	out.setx(h);
+	out.sety(c);
+	return out;
 }
 
 
