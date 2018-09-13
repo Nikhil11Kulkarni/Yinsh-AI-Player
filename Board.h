@@ -15,7 +15,7 @@ class Point{
 	int gety();
 	void setx(int x1);
 	void sety(int y1);
-}
+};
 
 class Board{
 
@@ -72,7 +72,7 @@ public:
 
 
 
-}
+};
 
 
 

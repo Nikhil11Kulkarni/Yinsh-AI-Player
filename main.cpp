@@ -39,6 +39,7 @@ while(readTokens < tokens.size()){
         readTokens++;
         int position = stoi(tokens[readTokens]);
         readTokens++;
+        
         board.setRing(opponentID , hexagon , position);    
     }
     else if(tokens[readTokens]=="S"){
@@ -79,15 +80,21 @@ while(readTokens < tokens.size()){
 int main() {
 
 	int myID,opponentID;
-	//cin--for detecting who is playing first.
+	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
 
 while(true){
 	string opponentMove;
 	std::getline (std::cin,opponentMove);
 	updateBoardOpponentMove( opponentID , opponentMove);
-
     //OUR Turn... Move wisely! Best luck!
+
+//First 5 moves must place a ring.
+//Thereafter search for "Removable Rows"--if T then remove them and remove a ring for every row.
+//else move a ring and 
+//Remove as many Removable Rows as possible.
+//At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
+if(board.)
 
 }
 
