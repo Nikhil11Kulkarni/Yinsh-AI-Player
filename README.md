@@ -10,3 +10,6 @@ python client.py 127.0.0.1 10000 RandomPlayer.py -mode GUI
 
 3. Set Client:
 python client.py 127.0.0.1 10000 RandomPlayer.py
+
+For c++ users:
+g++ -std=c++11 main.cpp
