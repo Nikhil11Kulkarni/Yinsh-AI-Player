@@ -26,6 +26,9 @@ Point hex_from_twod (Point p);
 class Board{
 	public:
 	int boardsize = 11;
+	int mynumberOfRings;
+	int opponentnumberOfRings;
+	//double 
 	int boardArray [11] [11];
     bool validArray [11] [11];
 

@@ -355,7 +355,7 @@ return neighbours;
 }
 
 
-void removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY){
+void Board::removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY){
 	int ringcolor = opponentID;
 	int mcolor = ringcolor+2;
 	for(int j = 0; j<11;j++){
@@ -405,7 +405,7 @@ void removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,in
 		}  
 	}
 
-};
+}
 
 
 

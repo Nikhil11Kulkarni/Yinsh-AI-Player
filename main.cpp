@@ -25,6 +25,17 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
+string setInitialRing(){
+	if(validArray[6][6]==false){board.setRing(myID, 6, 6);return;}
+	int j=6;
+	for(int i=0;i<5;i++){
+		if(validArray[i][j]==false){
+
+		}
+	}
+
+}
+
 
 void updateBoardOpponentMove(int opponentID , string opponentMove){
     std::vector<std::string> tokens = split(opponentMove, ' '); //tokens is a vector conating input//for(auto& s: tokens)std::cout << s << endl;
@@ -95,7 +106,15 @@ while(true){
 //else move a ring and 
 //Remove as many Removable Rows as possible.
 //At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
-if(board.mynumberOfRings==5)placingDone=
+if(board.mynumberOfRings==5)placingDone=true;
+string mymove;
+
+	if(placingDone==false){
+		mymove= setInitialRing();
+	}
+	else{
+
+	}
 
 }
 
