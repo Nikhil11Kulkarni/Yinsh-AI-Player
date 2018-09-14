@@ -39,7 +39,26 @@ void Point::sety(int y1){
 void Point::set(int x1,int y1){
 		this->x = x1; this->y = y1;
 	}
+string Point::getxystring(){
+	string var="";
+	var=var+to_string(this->x);
+	var=var+" ";
+	var=var+to_string(this->y);
+	return var;
+	}	
 
+string Point::getHexagonPositionString(){
+	Point p2;
+	Point p1;
+	p1.set(this->x , this->y);
+	p2=hex_from_twod(p1);
+	string var="";
+	var=var+to_string(p2.getx());
+	var=var+" ";
+	var=var+to_string(p2.gety());
+	return var;
+	}
+ 
 
 
 
@@ -355,7 +374,7 @@ return neighbours;
 }
 
 
-void Board::removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY){
+void Board::removeRing(int opponentID ){
 	int ringcolor = opponentID;
 	int mcolor = ringcolor+2;
 	for(int j = 0; j<11;j++){

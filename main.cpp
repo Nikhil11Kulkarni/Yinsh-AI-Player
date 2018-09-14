@@ -26,13 +26,43 @@ std::vector<std::string> split(const std::string &s, char delim) {
 }
 
 string setInitialRing(){
-	if(validArray[6][6]==false){board.setRing(myID, 6, 6);return;}
-	int j=6;
-	for(int i=0;i<5;i++){
-		if(validArray[i][j]==false){
+	string initialmove="P ";
+	int j=5;
+	Point p1,p2;
+	
+	if(validArray[5][5]==false){  board.setRing(myID, 5, 5);
+		p1.set(5,5); 
+		p2 = board.hex_from_twod(p1); 
+		initialmove=initialmove + p2.getxystring() ;
+		return initialmove;
+	}//centre
+	for(int i=1;i<5;i++){
+		if(validArray[5+i][j]==false){board.setRing(myID, 5+i, j);  
+			p1.set(5+i,j); 
+			p2 = board.hex_from_twod(p1); 
+			initialmove=initialmove + p2.getxystring() ;
+			return initialmove;}
 
-		}
+		if(validArray[5-i][j]==false){board.setRing(myID, 5-i, j);
+			p1.set(5+i,j); 
+			p2 = board.hex_from_twod(p1); 
+			initialmove=initialmove + p2.getxystring() ;
+			return initialmove;}
+	
+		if(validArray[j][5+i]==false){board.setRing(myID, j,5+i);
+			p1.set(5+i,j); 
+			p2 = board.hex_from_twod(p1); 
+			initialmove=initialmove + p2.getxystring() ;
+			return initialmove;}
+
+		if(validArray[j][5-i]==false){board.setRing(myID, j,5-i);
+			p1.set(5+i,j); 
+			p2 = board.hex_from_twod(p1); 
+			initialmove=initialmove + p2.getxystring() ;
+			return initialmove;}
 	}
+	cout<<"NONE OF THE SORROUNDING HAVE SPACE TO PUT A RING :CHECK!!!"
+	return initialmove;
 
 }
 
@@ -87,6 +117,45 @@ while(readTokens < tokens.size()){
 }
 
 }
+int evaluation(Board board){
+	
+}
+
+int maxValue(Board currentBoard , int depth){
+	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
+	std::vector<Board> currentNeighbours = currentBoard.getNeighbours();
+	int v=-1;
+	depth++;
+	for(int i=0;i<currentNeighbours.size();i++){
+		v=max(v , minValue(currentNeighbours[i] , depth));
+	}
+	return v;
+
+}
+
+int minValue(Board currentBoard, int depth){
+
+	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
+	std::vector<Board> currentNeighbours = currentBoard.getNeighbours();
+	int v=std::numeric_limits<int>::max();
+	depth++;
+	for(int i=0;i<currentNeighbours.size();i++){
+		v=min(v , maxValue(currentNeighbours[i] , depth));
+	}
+	return v;
+	
+}
+
+string minimaxDecision(Board currentBoard){
+	int depth=0;
+	int v=maxValue(currentBoard, depth);
+	std::vector<Board> currentNeighbours = board.getNeighbours();
+	for(int i=0;i<currentNeighbours.size();i++){
+		if(evaluation(currentNeighbours[i])==v){return currentNeighbours.action;}//return action string here.
+	}
+}
+
+
 
 int main() {
 
@@ -110,10 +179,14 @@ if(board.mynumberOfRings==5)placingDone=true;
 string mymove;
 
 	if(placingDone==false){
-		mymove= setInitialRing();
+		mymove= setInitialRing(); //function sets the board and gives the initial move.
+		cout<<mymove<<endl;
 	}
-	else{
 
+	else{
+		board.removeRing(myID);
+		mymove = minimaxDecision(board);
+		board.removeRing(myID);
 	}
 
 }

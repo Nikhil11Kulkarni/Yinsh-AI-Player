@@ -16,6 +16,7 @@ class Point{
 	void setx(int x1);
 	void sety(int y1);
 	void set(int x1,int y1);
+	string getxystring();
 } ;
 
 
@@ -71,7 +72,7 @@ class Board{
      * to remove a ring from the board, and set the board accordingly.
      * 
      */
- 	void removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
+ 	void removeRing(int opponentID );
 	
 	/**
      * to calculate the evaluation function.
