@@ -15,6 +15,7 @@ class Point{
 	int gety();
 	void setx(int x1);
 	void sety(int y1);
+	void set(int x1,int y1);
 } ;
 
 

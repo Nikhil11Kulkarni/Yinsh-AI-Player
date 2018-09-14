@@ -36,6 +36,9 @@ void Point::setx(int x1){
 void Point::sety(int y1){
 		this->y = y1;
 	}
+void Point::set(int x1,int y1){
+		this->x = x1; this->y = y1;
+	}
 
 
 
@@ -290,11 +293,119 @@ Point Board::hex_from_twod (Point p){
 }
 
 
-void Board::getNeighbours(int px,int py, int ringcolor){
+vector<Point> Board::getNeighbours(int px,int py, int ringcolor){
+	vecotr <Point> neighbours;
+	// in direction 0
+	int i=0;int flag =0; Point p0;
+	while(py+i<=10 && boardArray[px][py+i] == ringcolor+2){
+		i++;
+		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) flag=1;
+	}
+	if(boardArray[px][py+1]==0||boardArray[px][py+1]==1)flag =1;
+	if(flag==0)neighbours.push_back(p0.set(px,py+i));
 
+	// in direction 1
+	int i=0;int flag =0; Point p1;
+	while(py+i<=10 && px+i<=10 && boardArray[px+i][py+i] == ringcolor+2){
+		i++;
+		if(boardArray[px+i][py+i]==0||boardArray[px+i][py+i]==1) flag=1;
+	}
+	if(boardArray[px+1][py+1]==0||boardArray[px+1][py+1]==1)flag =1;
+	if(flag==0)neighbours.push_back(p1.set(px+i,py+i));
+
+	// in direction 2
+	int i=0;int flag =0; Point p2;
+	while(py-i>=0 && px+i<=10 && boardArray[px+i][py-i] == ringcolor+2){
+		i++;
+		if(boardArray[px+i][py-i]==0||boardArray[px+i][py-i]==1) flag=1;
+	}
+	if(boardArray[px+1][py-1]==0||boardArray[px+1][py-1]==1)flag =1;
+	if(flag==0)neighbours.push_back(p2.set(px+i,py-i));
+
+	// in direction 3
+	int i=0;int flag =0; Point p3;
+	while(py-i<=0 && boardArray[px][py-i] == ringcolor+2){
+		i++;
+		if(boardArray[px][py-i]==0||boardArray[px][py-i]==1) flag=1;
+	}
+	if(boardArray[px][py-1]==0||boardArray[px][py-1]==1)flag =1;
+	if(flag==0)neighbours.push_back(p3.set(px,py-i));
+
+	// in direction 4
+	int i=0;int flag =0; Point p4;
+	while(py-i>=0 && px-i>=0 && boardArray[px-i][py-i] == ringcolor+2){
+		i++;
+		if(boardArray[px-i][py-i]==0||boardArray[px-i][py-i]==1) flag=1;
+	}
+	if(boardArray[px-1][py-1]==0||boardArray[px-1][py-1]==1)flag =1;
+	if(flag==0)neighbours.push_back(p4.set(px-i,py-i));	
+
+	// in direction 5
+	int i=0;int flag =0; Point p5;
+	while(py+i<=10 && px-i>=0 && boardArray[px-i][py+i] == ringcolor+2){
+		i++;
+		if(boardArray[px-i][py+i]==0||boardArray[px-i][py+i]==1) flag=1;
+	}
+	if(boardArray[px-1][py+1]==0||boardArray[px-1][py+1]==1)flag =1;
+	if(flag==0)neighbours.push_back(p5.set(px-i,py+i));	
+
+
+return neighbours; 
 	
 }
 
+
+void removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY){
+	int ringcolor = opponentID;
+	int mcolor = ringcolor+2;
+	for(int j = 0; j<11;j++){
+		for(int i= 0; i<=6;i++ ){
+			if(boardArray[j][i] == mcolor && boardArray[j][i+1] == mcolor && boardArray[j][i+2] == mcolor && boardArray[j][i+3] == mcolor  
+				&& boardArray[j][i+4] == mcolor){
+				// do something.
+			}
+		}
+	}
+
+	for(int j = 0; j<11;j++){
+		for(int i= 0; i<=6;i++ ){
+			if(boardArray[i][j] == mcolor && boardArray[i+1][j] == mcolor && boardArray[i+2][j] == mcolor && boardArray[i+3][j] == mcolor  
+				&& boardArray[i+4][j] == mcolor){
+				// do something.
+			}
+		}
+	}
+
+	for(int k = 4; k>=1;k--){
+		for (int i = 0; i<7-k ;i++){
+			if(boardArray[k+i][i] == mcolor && boardArray[k+i+1][i+1] == mcolor && boardArray[k+i+2][i+2] == mcolor && boardArray[k+i+3][i+3] == mcolor  
+				&& boardArray[k+i+4][i+4] == mcolor){
+				// do something.
+			}
+		}  
+	}	
+
+
+	// for line going to up-right in the middle. has to be written
+	for (int i=1;i<=5;i++){
+		if(boardArray[i][i] == mcolor && boardArray[i+1][i+1] == mcolor && boardArray[i+2][i+2] == mcolor && boardArray[i+3][i+3] == mcolor  
+				&& boardArray[i+4][i+4] == mcolor){
+				// do something.
+			}
+	}
+
+
+
+	for(int k = 4; k>=1;k--){
+		for (int i = 0; i<7-k ;i++){
+			if(boardArray[i][k+i] == mcolor && boardArray[i+1][k+i+1] == mcolor && boardArray[i+2][k+i+2] == mcolor && boardArray[i+3][k+i+3] == mcolor  
+				&& boardArray[i+4][k+i+4] == mcolor){
+				// do something.
+			}
+		}  
+	}
+
+};
 
 
 
