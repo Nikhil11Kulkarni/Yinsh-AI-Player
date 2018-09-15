@@ -488,5 +488,5 @@ vector<Board> Board::getSuccesors(int ringcolor){
 	return succ;
 }
 
-
+// this is old one
 
