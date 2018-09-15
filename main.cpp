@@ -7,6 +7,7 @@ using namespace std;
 
 //GLOBAL VARIABLES
 Board board; 
+int myID=1,opponentID=0;
 
 
 //GLOBAL FUNCTIONS
@@ -30,38 +31,38 @@ string setInitialRing(){
 	int j=5;
 	Point p1,p2;
 	
-	if(validArray[5][5]==false){  board.setRing(myID, 5, 5);
+	if(board.validArray[5][5]==false){  board.setRing(myID, 5, 5);
 		p1.set(5,5); 
 		p2 = board.hex_from_twod(p1); 
 		initialmove=initialmove + p2.getxystring() ;
 		return initialmove;
 	}//centre
 	for(int i=1;i<5;i++){
-		if(validArray[5+i][j]==false){board.setRing(myID, 5+i, j);  
+		if(board.validArray[5+i][j]==false){board.setRing(myID, 5+i, j);  
 			p1.set(5+i,j); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 
-		if(validArray[5-i][j]==false){board.setRing(myID, 5-i, j);
+		if(board.validArray[5-i][j]==false){board.setRing(myID, 5-i, j);
 			p1.set(5+i,j); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 	
-		if(validArray[j][5+i]==false){board.setRing(myID, j,5+i);
+		if(board.validArray[j][5+i]==false){board.setRing(myID, j,5+i);
 			p1.set(5+i,j); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 
-		if(validArray[j][5-i]==false){board.setRing(myID, j,5-i);
+		if(board.validArray[j][5-i]==false){board.setRing(myID, j,5-i);
 			p1.set(5+i,j); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 	}
-	cout<<"NONE OF THE SORROUNDING HAVE SPACE TO PUT A RING :CHECK!!!"
+	cout<<"NONE OF THE SORROUNDING HAVE SPACE TO PUT A RING :CHECK!!!";
 	return initialmove;
 
 }
@@ -119,7 +120,7 @@ while(readTokens < tokens.size()){
 }
 int evaluation(Board board){
 	int myarr[6],opponentarr[6],weights[6];
-	int myCount=0;opponentCount=0;
+	int myCount=0,opponentCount=0;
 	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; weights[i]=i*2; }
 	int currentTurn= myID;
 	for(int i = 0; i<11;i++){
@@ -161,22 +162,13 @@ int sumEvaluation=0;
 return sumEvaluation;
 }
 
-int maxValue(Board currentBoard , int depth){
-	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
-	std::vector<Board> currentNeighbours = currentBoard.getNeighbours();
-	int v=-1;
-	depth++;
-	for(int i=0;i<currentNeighbours.size();i++){
-		v=max(v , minValue(currentNeighbours[i] , depth));
-	}
-	return v;
-
-}
+int maxValue(Board currentBoard , int depth);
+int minValue(Board currentBoard, int depth);
 
 int minValue(Board currentBoard, int depth){
 
 	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
-	std::vector<Board> currentNeighbours = currentBoard.getNeighbours();
+	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(opponentID);
 	int v=std::numeric_limits<int>::max();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
@@ -186,10 +178,23 @@ int minValue(Board currentBoard, int depth){
 	
 }
 
+int maxValue(Board currentBoard , int depth){
+	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
+	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
+	int v=-1;
+	depth++;
+	for(int i=0;i<currentNeighbours.size();i++){
+		int minofneighbour= minValue(currentNeighbours[i],depth);
+		v= max(v,  minofneighbour);
+	}
+	return v;
+
+}
+
 string minimaxDecision(Board currentBoard){
 	int depth=0;
 	int v=maxValue(currentBoard, depth);
-	std::vector<Board> currentNeighbours = currentBoard.getNeighbours();
+	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 	for(int i=0;i<currentNeighbours.size();i++){
 		if(evaluation(currentNeighbours[i])==v){ board=currentBoard ; return currentNeighbours.action;}//return action string here.
 	}
@@ -199,7 +204,6 @@ string minimaxDecision(Board currentBoard){
 
 int main() {
 
-	int myID=1,opponentID=0;
 	bool placingDone = false;
 	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
