@@ -2,7 +2,7 @@
 
 #ifndef BOARD_H
 #define	BOARD_H
-
+#include <bits/stdc++.h>
 #include<iostream>
 #include<fstream>
 using namespace std;
@@ -17,6 +17,7 @@ class Point{
 	void sety(int y1);
 	void set(int x1,int y1);
 	string getxystring();
+	string getHexagonPositionString();
 } ;
 
 

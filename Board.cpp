@@ -138,6 +138,9 @@ Board::Board ( )
 	this->numberOfRings[0]=0;
 	this->numberOfRings[1]=0;
     // refer to the coordinate system : a,b,c... are represented by the first dimension of the array.
+	this->numberOfRings[0]=0;
+	this->numberOfRings[0]=0;
+	
     for(int i = 0;i<=10;i++){
     	for(int j =0;j<=10;j++){
     		boardArray[i][j] = -1;
@@ -511,7 +514,7 @@ vector<Board> Board::getSuccessors(int ringcolor){
 	for(int i =0;i<=10;i++){
 		for(int j =0;j<=10;j++){
 			if(boardArray[i][j] == ringcolor){
-				vecor<Board> n = getNeighbours(i,j,ringcolor);
+				vector<Board> n = getNeighbours(i,j,ringcolor);
 				succ.insert(succ.end(),n.begin(),n.end());
 			}
 		}
