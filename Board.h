@@ -42,6 +42,8 @@ class Board{
 
 	Board( int boardsize);
 
+	Board clone();
+
 	Point twod_from_hex (Point p);
 	
 	Point hex_from_twod (Point p);
@@ -76,8 +78,11 @@ class Board{
      */
 	float evaluate();
 
-	void getNeighbours(int px,int py, int ringcolor);
+	vector<Board> getNeighbours(int px,int py, int ringcolor);
 
+	vector<Board> getSuccessors(int ringcolor);
+
+	void removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
 
 
 }
