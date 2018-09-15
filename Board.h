@@ -27,11 +27,15 @@ Point hex_from_twod (Point p);
 class Board{
 	public:
 	int boardsize = 11;
-	int mynumberOfRings;
-	int opponentnumberOfRings;
+	int numberOfRings[2];
+	// int mynumberOfRings;
+	// int opponentnumberOfRings;
 	//double 
 	int boardArray [11] [11];
     bool validArray [11] [11];
+
+    int action[4];
+    void setAction(int from_x,int from_y, int to_x,int to_y);
 
 	/**
      * Constructor : Creates the empty board with default size corresponding to 5 rings
