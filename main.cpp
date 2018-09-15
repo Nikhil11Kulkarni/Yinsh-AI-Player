@@ -118,7 +118,47 @@ while(readTokens < tokens.size()){
 
 }
 int evaluation(Board board){
-	
+	int myarr[6],opponentarr[6],weights[6];
+	int myCount=0;opponentCount=0;
+	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; weights[i]=i; }
+	int currentTurn= myID;
+	for(int i = 0; i<11;i++){
+		for(int j= 0; j<11;j++){
+			if(board.boardArray[i][j]==myID && currentTurn==myID){
+				myCount++;
+			}
+			if(board.boardArray[i][j]==myID && currentTurn==opponentID){
+				opponentarr[opponentCount]=opponentarr[opponentCount] + 1;
+				opponentCount=0;
+				currentTurn=myID;
+				myCount++;
+			}
+			if(board.boardArray[i][j]==opponentID && currentTurn==myID){
+				myarr[myCount]=myarr[myCount] + 1;
+				myCount=0;
+				currentTurn=opponentID;
+				opponentCount++;
+			}
+			if(board.boardArray[i][j]==opponentID && currentTurn==opponentID){
+				opponentCount++;
+			}
+			if(board.boardArray[i][j]!=opponentID && board.boardArray[i][j]!=myID){
+				if(currentTurn==myID)myarr[myCount]=myarr[myCount] + 1;
+				if(currentTurn==opponentID)opponentarr[opponentCount]=opponentarr[opponentCount] + 1;
+				myCount=0;
+				opponentCount=0;
+				currentTurn=myID;
+			}
+		}
+		if(currentTurn==myID)myarr[myCount]=myarr[myCount] + 1;
+		if(currentTurn==opponentID)opponentarr[opponentCount]=opponentarr[opponentCount] + 1;
+		myCount=0;
+		opponentCount=0;
+		currentTurn=myID;
+	}
+int sumEvaluation=0;
+	for(int i=0;i<6;i++){ sumEvaluation=sumEvaluation + weights[i]*(myarr[i] - opponentarr[i]) ; }
+return sumEvaluation;
 }
 
 int maxValue(Board currentBoard , int depth){
