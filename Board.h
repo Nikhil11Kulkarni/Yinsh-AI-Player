@@ -16,6 +16,7 @@ class Point{
 	void setx(int x1);
 	void sety(int y1);
 	void set(int x1,int y1);
+	string getxystring();
 } ;
 
 
@@ -26,6 +27,9 @@ Point hex_from_twod (Point p);
 class Board{
 	public:
 	int boardsize = 11;
+	int mynumberOfRings;
+	int opponentnumberOfRings;
+	//double 
 	int boardArray [11] [11];
     bool validArray [11] [11];
 
@@ -70,7 +74,7 @@ class Board{
      * to remove a ring from the board, and set the board accordingly.
      * 
      */
- 	void removeRing(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
+ 	void removeRing(int opponentID );
 	
 	/**
      * to calculate the evaluation function.
