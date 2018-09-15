@@ -135,6 +135,8 @@ Board::Board ( )
 {	
 	for(int i=0;i<4;i++)
 	this->action[i]=-1;
+	this->numberOfRings[0]=0;
+	this->numberOfRings[1]=0;
     // refer to the coordinate system : a,b,c... are represented by the first dimension of the array.
 	this->numberOfRings[0]=0;
 	this->numberOfRings[0]=0;
@@ -200,7 +202,32 @@ Board Board::clone(){
 }
 
 
+void Board::setmyRing(int ringcolor,int px, int py){
+// if(ringcolor == opponentID){
+// 	Point p1;
+// 	p1.set(px,py);
+// 	Point p2=twod_from_hex(p1);
+// 	px=p2.getx();
+// 	py=p2.gety();
+// 	cout<<" px:"<<px<<" py:"<<py<<endl;
+// 	}
+	if(boardArray[px][py] == -1 && validArray[px][py] == true )  
+		{	boardArray[px][py] = ringcolor;
+			validArray[px][py] = false;       // CHECK THIS !!!!!!!
+			this->numberOfRings[ringcolor] ++; 
+		}
+
+}
+
+
 void Board::setRing(int ringcolor,int px, int py){
+
+	Point p1;
+	p1.set(px,py);
+	Point p2=twod_from_hex(p1);
+	px=p2.getx();
+	py=p2.gety();
+	cout<<"opponent- px:"<<px<<" py:"<<py<<endl;
 
 	if(boardArray[px][py] == -1 && validArray[px][py] == true )  
 		{	boardArray[px][py] = ringcolor;
@@ -214,6 +241,19 @@ void Board::setRing(int ringcolor,int px, int py){
 void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 
 	// 	ASSUMING THAT THE TO AND FROM COORDINATES ARE VALID.
+	Point p1,p2;
+	p1.set(from_x,from_y);
+	p2.set(to_x,to_y);
+	Point p1changed=twod_from_hex(p1);
+	Point p2changed=twod_from_hex(p2);
+	
+	from_x = p1changed.getx(); 
+	from_y = p1changed.gety();
+	to_x = p2changed.getx(); 
+	to_y = p2changed.gety();
+	
+	
+
 	boardArray[from_x][from_y] = ringcolor +2;
 	boardArray [to_x][to_y] = ringcolor;
 	validArray[from_x][from_y] = false;
@@ -340,7 +380,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	if(boardArray[px][py+1]==0||boardArray[px][py+1]==1)flag =1;
 	if(flag==0){ p0.moveRing(ringcolor,px,py,px,py+i);
 				 p0.setAction(px,py,px,py+i);
-				 cout<<"in neighbour function : "<<"i is "<<i;
+				 cout<<"in neighbour function : "<<"i is "<<i<<endl;
 				 neighbours.push_back(p0);}
 		// neighbours.push_back(p0.set(px,py+i));
 
@@ -465,6 +505,22 @@ void Board::removeRing(int opponentID ){
 
 // given the string of turn of the opponent remove his markers from the board. 
 void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY){
+	Point p1,p2,p3;
+	p1.set(from_x,from_y);
+	p2.set(to_x,to_y);
+	p3.set(ring_removeX,ring_removeY);
+	Point p1changed=twod_from_hex(p1);
+	Point p2changed=twod_from_hex(p2);
+	Point p3changed=twod_from_hex(p3);
+		
+	from_x = p1changed.getx(); 
+	from_y = p1changed.gety();
+	to_x = p2changed.getx(); 
+	to_y = p2changed.gety();
+	ring_removeX = p3changed.getx(); 
+	ring_removeY = p3changed.gety();
+
+
 	int ringcolor = opponentID;
 	this->numberOfRings[ringcolor] --;
 	boardArray[ring_removeX][ring_removeY] = -1;
@@ -518,6 +574,24 @@ vector<Board> Board::getSuccessors(int ringcolor){
 		}
 	}
 	return succ;
+}
+
+
+void Board::printBoard(){
+	int c;
+    for(int i = 0;i<=10;i++){
+	for(int j = 0;j<=10;j++){
+		c = boardArray[i][j];
+		if(boardArray[i][j]==-1) c = 5;
+		cout<<c<<" ";
+	}
+	cout<<"                ";
+	for(int j =0;j<=10;j++){
+		cout<<validArray[i][j]<<" ";
+	}
+
+	cout<<endl;
+	}
 }
 
 // this is old one
