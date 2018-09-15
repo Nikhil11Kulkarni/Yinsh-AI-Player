@@ -31,37 +31,38 @@ string setInitialRing(){
 	int j=5;
 	Point p1,p2;
 	
-	if(board.validArray[5][5]==false){  board.setRing(myID, 5, 5);
+	if(board.validArray[5][5]==true){  board.setmyRing(myID, 5, 5);	cout<<" px:"<<5<<" py:"<<5<<endl;
 		p1.set(5,5); 
 		p2 = board.hex_from_twod(p1); 
 		initialmove=initialmove + p2.getxystring() ;
 		return initialmove;
 	}//centre
 	for(int i=1;i<5;i++){
-		if(board.validArray[5+i][j]==false){board.setRing(myID, 5+i, j);  
+		if(board.validArray[5+i][j]==true){board.setmyRing(myID, 5+i, j); 	cout<<" px:"<< 5+i <<" py:"<<j<<endl; 
 			p1.set(5+i,j); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 
-		if(board.validArray[5-i][j]==false){board.setRing(myID, 5-i, j);
-			p1.set(5+i,j); 
+		if(board.validArray[5-i][j]==true){board.setmyRing(myID, 5-i, j);	cout<<" px:"<< 5-i<<" py:"<< j<<endl;
+			p1.set(5-i,j); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 	
-		if(board.validArray[j][5+i]==false){board.setRing(myID, j,5+i);
-			p1.set(5+i,j); 
+		if(board.validArray[j][5+i]==true){board.setmyRing(myID, j,5+i);	cout<<" px:"<<j<<" py:"<<5+i<<endl;
+			p1.set(j,5+i); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 
-		if(board.validArray[j][5-i]==false){board.setRing(myID, j,5-i);
-			p1.set(5+i,j); 
+		if(board.validArray[j][5-i]==true){board.setmyRing(myID, j,5-i);	cout<<" px:"<<j<<" py:"<<5-i<<endl;
+			p1.set(j,5-i); 
 			p2 = board.hex_from_twod(p1); 
 			initialmove=initialmove + p2.getxystring() ;
 			return initialmove;}
 	}
+
 	cout<<"NONE OF THE SORROUNDING HAVE SPACE TO PUT A RING :CHECK!!!";
 	return initialmove;
 
@@ -198,10 +199,22 @@ string minimaxDecision(Board currentBoard){
 	for(int i=0;i<currentNeighbours.size();i++){
 		if(evaluation(currentNeighbours[i])==v){ 
 		board=currentBoard ; 
+Point p1,p2;
+	p1.set(currentNeighbours[i].action[0],currentNeighbours[i].action[1]);
+	p2.set(currentNeighbours[i].action[2],currentNeighbours[i].action[3]);
+	Point p1changed=hex_from_twod(p1);
+	Point p2changed=hex_from_twod(p2);
+	
+	int from_x = p1changed.getx(); 
+	int from_y = p1changed.gety();
+	int to_x = p2changed.getx(); 
+	int to_y = p2changed.gety();
+	
+
 		string ans="";
 		ans=ans+"S ";
-		ans=ans+ to_string(currentNeighbours[i].action[0])+" "+to_string(currentNeighbours[i].action[1])+" ";//"S x y "
-		ans=ans+"M " + to_string(currentNeighbours[i].action[2])+" "+to_string(currentNeighbours[i].action[3]);//"S x y M x y";
+		ans=ans+ to_string(from_x)+" "+to_string(from_y)+" ";//"S x y "
+		ans=ans+"M " + to_string(to_x)+" "+to_string(to_y);//"S x y M x y";
 		
 		return ans;
 		}
@@ -221,6 +234,7 @@ while(true){
 	string opponentMove;
 	std::getline (std::cin,opponentMove);
 	updateBoardOpponentMove( opponentID , opponentMove);
+	board.printBoard();
     //OUR Turn... Move wisely! Best luck!
 
 //First 5 moves must place a ring.
@@ -237,14 +251,20 @@ string mymove;
 	}
 
 	else{
+		cout<<"b1"<<endl;
 		board.removeRing(myID);
+		cout<<"b2"<<endl;
 		mymove = minimaxDecision(board);
+		cout<<"b3:------"<<mymove<<endl;		
 		board.removeRing(myID);
+		cout<<"b4"<<endl;
 		cout<<mymove<<endl;	
 	}
+	cout<<"b5"<<endl;
 
 if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
 	int winner,unlucky;
+	cout<<"b6"<<endl;	
 	if(board.numberOfRings[myID]<=2){ winner=myID; unlucky=opponentID;}
 	else{ winner=opponentID; unlucky=myID;} 
 

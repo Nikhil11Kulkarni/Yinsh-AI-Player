@@ -68,6 +68,7 @@ class Board{
 
 
 	void setRing(int ringcolor,int px, int py);
+	void setmyRing(int ringcolor,int px, int py);
 
 	/**
      * to move the position of a ring on the board, and set the board accordingly.
@@ -86,6 +87,8 @@ class Board{
      * 
      */
 	float evaluate();
+
+	void printBoard();
 
 	vector<Board> getNeighbours(int px,int py, int ringcolor);
 
