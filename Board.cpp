@@ -135,6 +135,8 @@ Board::Board ( )
 {	
 	for(int i=0;i<4;i++)
 	this->action[i]=-1;
+	this->numberOfRings[0]=0;
+	this->numberOfRings[1]=0;
     // refer to the coordinate system : a,b,c... are represented by the first dimension of the array.
     for(int i = 0;i<=10;i++){
     	for(int j =0;j<=10;j++){
@@ -202,7 +204,7 @@ void Board::setRing(int ringcolor,int px, int py){
 	if(boardArray[px][py] == -1 && validArray[px][py] == true )  
 		{	boardArray[px][py] = ringcolor;
 			validArray[px][py] = false;       // CHECK THIS !!!!!!!
-			this->numberOfrings[ringcolor] ++; 
+			this->numberOfRings[ringcolor] ++; 
 		}
 
 }
@@ -409,7 +411,7 @@ return neighbours;
 
 void Board::removeRing(int opponentID ){
 	int ringcolor = opponentID;
-	this->numberofrings[ringcolor] --;
+	this->numberOfRings[ringcolor] --;
 	int mcolor = ringcolor+2;
 	for(int j = 0; j<11;j++){
 		for(int i= 0; i<=6;i++ ){
@@ -463,7 +465,7 @@ void Board::removeRing(int opponentID ){
 // given the string of turn of the opponent remove his markers from the board. 
 void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY){
 	int ringcolor = opponentID;
-	this->numberofrings[ringcolor] --;
+	this->numberOfRings[ringcolor] --;
 	boardArray[ring_removeX][ring_removeY] = -1;
 	validArray[ring_removeX][ring_removeY] = true;
 
@@ -503,7 +505,7 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 
 
 // do something like storing a board and evaluationg the racursing on actions in minimax. 
-vector<Board> Board::getSuccesors(int ringcolor){
+vector<Board> Board::getSuccessors(int ringcolor){
 	vector<Board> succ;
 	// ringcolor == 
 	for(int i =0;i<=10;i++){
