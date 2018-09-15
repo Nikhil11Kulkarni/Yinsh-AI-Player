@@ -196,7 +196,16 @@ string minimaxDecision(Board currentBoard){
 	int v=maxValue(currentBoard, depth);
 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 	for(int i=0;i<currentNeighbours.size();i++){
-		if(evaluation(currentNeighbours[i])==v){ board=currentBoard ; return currentNeighbours.action;}//return action string here.
+		if(evaluation(currentNeighbours[i])==v){ 
+		board=currentBoard ; 
+		string ans="";
+		ans=ans+"S ";
+		ans=ans+ to_string(currentNeighbours[i].action[0])+" "+to_string(currentNeighbours[i].action[1])+" ";//"S x y "
+		ans=ans+"M " + to_string(currentNeighbours[i].action[2])+" "+to_string(currentNeighbours[i].action[3]);//"S x y M x y";
+		
+		return ans;
+		}
+		//return action string here.
 	}
 }
 
