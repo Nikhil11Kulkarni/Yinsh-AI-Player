@@ -120,7 +120,7 @@ while(readTokens < tokens.size()){
 int evaluation(Board board){
 	int myarr[6],opponentarr[6],weights[6];
 	int myCount=0;opponentCount=0;
-	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; weights[i]=i; }
+	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; weights[i]=i*2; }
 	int currentTurn= myID;
 	for(int i = 0; i<11;i++){
 		for(int j= 0; j<11;j++){
@@ -189,9 +189,9 @@ int minValue(Board currentBoard, int depth){
 string minimaxDecision(Board currentBoard){
 	int depth=0;
 	int v=maxValue(currentBoard, depth);
-	std::vector<Board> currentNeighbours = board.getNeighbours();
+	std::vector<Board> currentNeighbours = currentBoard.getNeighbours();
 	for(int i=0;i<currentNeighbours.size();i++){
-		if(evaluation(currentNeighbours[i])==v){return currentNeighbours.action;}//return action string here.
+		if(evaluation(currentNeighbours[i])==v){ board=currentBoard ; return currentNeighbours.action;}//return action string here.
 	}
 }
 
@@ -199,7 +199,7 @@ string minimaxDecision(Board currentBoard){
 
 int main() {
 
-	int myID,opponentID;
+	int myID=1,opponentID=0;
 	bool placingDone = false;
 	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
@@ -227,6 +227,7 @@ string mymove;
 		board.removeRing(myID);
 		mymove = minimaxDecision(board);
 		board.removeRing(myID);
+		cout<<mymove<<endl;	
 	}
 
 }
