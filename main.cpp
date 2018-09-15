@@ -111,7 +111,7 @@ while(readTokens < tokens.size()){
         int ring_removeY = stoi(tokens[readTokens]);
         readTokens++;
 
-        board.removeRing(opponentID , from_x ,from_y , to_x , to_y , ring_removeX , ring_removeY);
+        board.removeRingOpponent(opponentID , from_x ,from_y , to_x , to_y , ring_removeX , ring_removeY);
         
     	}    
 }
@@ -215,7 +215,7 @@ while(true){
 //else move a ring and 
 //Remove as many Removable Rows as possible.
 //At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
-if(board.mynumberOfRings==5)placingDone=true;
+if(board.numberOfRings[myID]==5)placingDone=true;
 string mymove;
 
 	if(placingDone==false){
@@ -229,6 +229,15 @@ string mymove;
 		board.removeRing(myID);
 		cout<<mymove<<endl;	
 	}
+
+if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
+	int winner,unlucky;
+	if(board.numberOfRings[myID]<=2){ winner=myID; unlucky=opponentID;}
+	else{ winner=opponentID; unlucky=myID;} 
+
+	cout<<"GAME OVER BROS: WIN:"<<winner<<" and LOSS:"<<unlucky<<endl;
+	break;
+}
 
 }
 
