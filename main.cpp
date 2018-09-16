@@ -268,7 +268,7 @@ while(true){
 	
 	std::clock_t start1;
 	double duration;
-	start = std::clock();
+	start1 = std::clock();
 
 	updateBoardOpponentMove( opponentID , opponentMove);
 	board.printBoard();
