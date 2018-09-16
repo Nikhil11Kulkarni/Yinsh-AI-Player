@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include<time.h>
+#include <limits>
 #include <bits/stdc++.h>
 #include <ctime>
 #include "Board.h"
@@ -11,6 +13,7 @@ using namespace std;
 Board board; 
 Board ansboard; 
 int myID,opponentID;
+double timeAllowed;
 
 
 //GLOBAL FUNCTIONS
@@ -161,7 +164,7 @@ int evaluation(Board board){
 		currentTurn=myID;
 	}
 int sumEvaluation=0;
-	for(int i=0;i<6;i++){ sumEvaluation=sumEvaluation + weights[i]*(myarr[i] - opponentarr[i]) ; }
+	for(int i=0;i<6;i++){ sumEvaluation=sumEvaluation + weights[i]*(myarr[i]) ; } // - opponentarr[i]
 return sumEvaluation;
 }
 
@@ -217,6 +220,9 @@ string minimaxDecision(Board currentBoard){
 //	return ans1;
 // cout<<"\n\nansboard:\n";
 // ansboard.printBoard();
+
+cout<<"my--from_x:"<<ansboard.action[0]<<" from_y:"<<ansboard.action[1]<<" to_x:"<<ansboard.action[2]<<" to_y:"<<ansboard.action[3]<<endl;
+
 board=ansboard ; 
 Point p1,p2;
 	p1.set(ansboard.action[0],ansboard.action[1]);
@@ -239,12 +245,17 @@ Point p1,p2;
 
 }
 
+std::istream& skip_till_endl(std::istream& in)
+{
+    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return in;
+}
 
 
 int main() {
 
 	bool placingDone = false;
-	double totaltime,timeAllowed;
+	double totaltime;
 	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
 		int playernum,boardsizeHexagon;
@@ -253,58 +264,52 @@ int main() {
 			opponentID = (3 -playernum) -1;//planum=1--myid=0--oppid=1   planum=2--myid=1--oppid=0
 			board.setID(myID,opponentID);
 		cin>>boardsizeHexagon; //NOT USED UNTIL NOW
-		cin>>timeAllowed ;//PUT TIME 
+		cin>>timeAllowed>>skip_till_endl;//PUT TIME 
 
 if(myID==0){
 string mo1= setInitialRing(); //function sets the board and gives the initial move.
 cout<<mo1<<endl;
 }
-cout<<"h1"<<endl;
 
 while(true){
 
-
 	string opponentMove;
 	std::getline (std::cin,opponentMove);
-	
+	double timestart= clock();
+
 	std::clock_t start1;
 	double duration;
 	start1 = std::clock();
 
 	updateBoardOpponentMove( opponentID , opponentMove);
 	board.printBoard();
-    //OUR Turn... Move wisely! Best luck!
 
-//First 5 moves must place a ring.
-//Thereafter search for "Removable Rows"--if T then remove them and remove a ring for every row.
-//else move a ring and 
-//Remove as many Removable Rows as possible.
-//At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
-if(board.numberOfRings[myID]==5)placingDone=true;
+if(board.numberOfRings[myID]==5){placingDone=true;cout<<"placingDone."<<endl;}
 string mymove;
 
 	if(placingDone==false){
+		cout<<"myring:"<<board.numberOfRings[myID]<<endl;
+		cout<<"opponentring:"<<board.numberOfRings[opponentID]<<endl;
 		mymove= setInitialRing(); //function sets the board and gives the initial move.
 		cout<<mymove<<endl;
 	}
-
 	else{
-		string strRemove1 = "",strRemove2 = "";
 
-		cout<<"b1"<<endl;
+		
+		string strRemove1 = "",strRemove2 = "";
+		//cout<<"1 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
 		strRemove1= board.removeRing(myID);
-		cout<<"b2"<<endl;
+		//cout<<"2 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;		
 		mymove = minimaxDecision(board);
-		cout<<"b3:------"<<mymove<<endl;		
+		cout<<"-- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
 		strRemove2= board.removeRing(myID);
-		cout<<"b4"<<endl;
+		
 	if(strRemove1!=""){mymove = strRemove1 +" "+ mymove;}
 	if(strRemove2!=""){	mymove=mymove+" " +strRemove2 ;}
 
 		cout<<mymove<<endl;	
 	}
-	cout<<"b5"<<endl;
-
+	
 if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
 	int winner,unlucky;
 	cout<<"b6"<<endl;	
@@ -316,6 +321,11 @@ if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opp
 }
 
 
+	double timeend= clock();
+	double timeelapsed=(timestart - timeend)/(CLOCKS_PER_SEC);
+
+timeAllowed=timeAllowed - timeelapsed;
+	
 	std::clock_t end1;
 	end1 = std::clock();
 	totaltime += end1 - start1;
@@ -325,4 +335,18 @@ if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opp
 
 }
 
+//PLEASE DONOT DELETE THIS COMMANDS
  
+//OUR Turn... Move wisely! Best luck!
+
+//First 5 moves must place a ring.
+//Thereafter search for "Removable Rows"--if T then remove them and remove a ring for every row.
+//else move a ring and 
+//Remove as many Removable Rows as possible.
+//At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
+
+
+// cout<<"b1"<<endl;
+// cout<<"b3:------"<<mymove<<endl;
+// cout<<"b4"<<endl;
+//cout<<"b5"<<endl;
