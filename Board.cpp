@@ -199,6 +199,7 @@ Board Board::clone(){
     		newboard.validArray[i][j] = this->validArray[i][j] ;
     	}
     }
+    return newboard;
 }
 
 
@@ -294,6 +295,55 @@ void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 }
 
 
+
+void Board::moveMyRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
+
+	// 	ASSUMING THAT THE TO AND FROM COORDINATES ARE VALID.
+
+		
+
+	boardArray[from_x][from_y] = ringcolor +2;
+	boardArray [to_x][to_y] = ringcolor;
+	validArray[from_x][from_y] = false;
+	validArray[to_x][to_y] = false;
+
+	if(from_x == to_x){
+		int miy = from_y,mxy  = to_y;
+		if(from_y>to_y){miy = to_y; mxy = from_y;}  
+		for(int i = miy+1; i< mxy ;i++){
+			if (boardArray[from_x][i] != -1 ) boardArray[from_x][i] = 5-boardArray[from_x][i]; // CHECK THIS IF CONDITION
+		}
+	}
+
+	else if(from_y == to_y){
+		int mix = from_x,mxx  = to_x;
+		if(from_x>to_x){mix = to_x; mxx = from_x;}  
+		for(int i = mix+1; i< mxx ;i++){
+			if (boardArray[i][from_y] != -1 ) boardArray[i][from_y] = 5-boardArray[i][from_y]; 
+		}
+	}
+
+	else{
+		if(from_x < to_x){
+		int s = to_x - from_x ;
+		for(int i = 1; i< s ;i++){
+			if (boardArray[from_x+i][from_y+i] != -1 ) boardArray[from_x+i][from_y+i] = 5-boardArray[from_x+i][from_y+i]; 
+		}
+		}
+
+		else{
+		int s =from_x -  to_x ;
+		for(int i = 1; i< s ;i++){
+			if (boardArray[from_x-i][from_y-i] != -1 ) boardArray[from_x-i][from_y-i] = 5-boardArray[from_x-i][from_y-i]; 
+		}
+		}
+	}
+
+}
+
+
+
+
 Point Board::twod_from_hex (Point p){
 		int h = p.getx();  // the hexagon number. center point is hexagon numbered 0.
 		int c = p.gety();  // the point clockwise, first being 0.
@@ -367,22 +417,33 @@ void Board::setAction(int from_x,int from_y, int to_x,int to_y){
 
 
 vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
-		// HAVE TO ADD THE CASE IN WHICH THERE IS -1 IN A DIRECTION SO ALL THE -1 IN THAT LINE
+	// HAVE TO ADD THE CASE IN WHICH THERE IS -1 IN A DIRECTION SO ALL THE -1 IN THAT LINE
 	// CORRESPOND TO NEIGHBOURS. 
+
+
+	// Point p1;
+	// p1.set(px,py);
+	// Point p2=twod_from_hex(p1);
+	// px=p2.getx();
+	// py=p2.gety();
 
 	vector <Board> neighbours;
 	// in direction 0
 	int i=1;int flag =0; Board p0 = this->clone(); 
+	cout<<"in neighbour function after cloning"<<endl;
+	p0.printBoard();
 	while(py+i<=10 && boardArray[px][py+i] == ringcolor+2){
 		i++;
 		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) flag=1;
 	}
 	if(boardArray[px][py+1]==0||boardArray[px][py+1]==1)flag =1;
-	if(flag==0){ p0.moveRing(ringcolor,px,py,px,py+i);
+	if(flag==0){ p0.moveMyRing(ringcolor,px,py,px,py+i);
 				 p0.setAction(px,py,px,py+i);
-				 cout<<"in neighbour function : "<<"i is "<<i<<endl;
+				 // cout<<"in neighbour function : "<<"px,py,i is "<<px<<","<<py<<","<<i<<endl;
+				 // cout<<"printing board in neighbour function"<<endl;
+				 // p0.printBoard();
 				 neighbours.push_back(p0);}
-		// neighbours.push_back(p0.set(px,py+i));
+
 
 	// in direction 1
 	i=1;flag =0;Board p1 = this->clone(); 
@@ -391,7 +452,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		if(boardArray[px+i][py+i]==0||boardArray[px+i][py+i]==1) flag=1;
 	}
 	if(boardArray[px+1][py+1]==0||boardArray[px+1][py+1]==1)flag =1;
-	if(flag==0){ p1.moveRing(ringcolor,px,py,px+i,py+i);
+	if(flag==0){ p1.moveMyRing(ringcolor,px,py,px+i,py+i);
 				 p1.setAction(px,py,px+i,py+i);
 				 neighbours.push_back(p1);}
 		// neighbours.push_back(p1.set(px+i,py+i));
@@ -403,7 +464,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		if(boardArray[px+i][py-i]==0||boardArray[px+i][py-i]==1) flag=1;
 	}
 	if(boardArray[px+1][py-1]==0||boardArray[px+1][py-1]==1)flag =1;
-	if(flag==0) { p2.moveRing(ringcolor,px,py,px+i,py-i);
+	if(flag==0) { p2.moveMyRing(ringcolor,px,py,px+i,py-i);
 			      p2.setAction(px,py,px+i,py-i);
 				  neighbours.push_back(p2);}
 		// neighbours.push_back(p2.set(px+i,py-i));
@@ -415,7 +476,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		if(boardArray[px][py-i]==0||boardArray[px][py-i]==1) flag=1;
 	}
 	if(boardArray[px][py-1]==0||boardArray[px][py-1]==1)flag =1;
-	if(flag==0){ p3.moveRing(ringcolor,px,py,px,py-i);
+	if(flag==0){ p3.moveMyRing(ringcolor,px,py,px,py-i);
 				 p3.setAction(px,py,px,py-i);
 				 neighbours.push_back(p3); }
 		// neighbours.push_back(p3.set(px,py-i));
@@ -427,7 +488,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		if(boardArray[px-i][py-i]==0||boardArray[px-i][py-i]==1) flag=1;
 	}
 	if(boardArray[px-1][py-1]==0||boardArray[px-1][py-1]==1)flag =1;
-	if(flag==0) {p4.moveRing(ringcolor,px,py,px-i,py-i);
+	if(flag==0) {p4.moveMyRing(ringcolor,px,py,px-i,py-i);
 				 p4.setAction(px,py,px-i,py-i);
 				 neighbours.push_back(p4);}
 		// neighbours.push_back(p4.set(px-i,py-i));	
@@ -439,7 +500,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		if(boardArray[px-i][py+i]==0||boardArray[px-i][py+i]==1) flag=1;
 	}
 	if(boardArray[px-1][py+1]==0||boardArray[px-1][py+1]==1)flag =1;
-	if(flag==0){ p5.moveRing(ringcolor,px,py,px-i,py+i);
+	if(flag==0){ p5.moveMyRing(ringcolor,px,py,px-i,py+i);
 				 p5.setAction(px,py,px-i,py+i);
 				 neighbours.push_back(p5);}
 		// neighbours.push_back(p5.set(px-i,py+i));	
@@ -568,7 +629,8 @@ vector<Board> Board::getSuccessors(int ringcolor){
 	for(int i =0;i<=10;i++){
 		for(int j =0;j<=10;j++){
 			if(boardArray[i][j] == ringcolor){
-				vector<Board> n = getNeighbours(i,j,ringcolor);
+				cout<<"looking for neighbours of "<<i<<","<<j<<endl;
+				vector<Board> n = this->getNeighbours(i,j,ringcolor);
 				succ.insert(succ.end(),n.begin(),n.end());
 			}
 		}

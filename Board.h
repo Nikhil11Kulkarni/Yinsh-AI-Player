@@ -7,6 +7,9 @@
 #include<fstream>
 using namespace std;
 
+
+// SET ACTION KO CHECK KRNA HAI ,,,,, USKE COORDINATES HEX ME CHAHIYE YA 2D ME.
+
 class Point{
 	int x;
 	int y;
@@ -75,6 +78,8 @@ class Board{
      * 
      */
 	void moveRing(int ringcolor, int from_x,int from_y, int to_x,int to_y);
+
+	void moveMyRing(int ringcolor, int from_x, int from_y, int to_x, int to_y);
 
 	/**
      * to remove a ring from the board, and set the board accordingly.
