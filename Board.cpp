@@ -270,6 +270,26 @@ void Board::setRing(int ringcolor,int px, int py){
 
 }
 
+void Board::updateRingPosition(int ringcolor ,int from_x, int from_y, int to_x, int to_y ){
+	Point ptoadd; ptoadd.set( to_x, to_y);
+	if(ringcolor==myIDboard){ 
+		for(int i=0;i<this->myringPositions.size();i++){
+			if(this->myringPositions[i].getx() == from_x && this->myringPositions[i].gety() == from_y){
+				this->myringPositions.erase(this->myringPositions.begin()+i );break; }
+		}
+		this->myringPositions.push_back(ptoadd);
+	}
+	
+	if(ringcolor==opponentIDboard){
+		for(int i=0;i<this->opponentringPositions.size();i++){
+			if(this->opponentringPositions[i].getx() == from_x && this->opponentringPositions[i].gety() == from_y){
+				this->opponentringPositions.erase(this->opponentringPositions.begin()+i );break; }
+		}
+		this->opponentringPositions.push_back(ptoadd);
+	}
+
+
+}
 
 void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 
@@ -286,6 +306,7 @@ void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 	to_y = p2changed.gety();
 	
 	
+	board.updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y );
 
 	boardArray[from_x][from_y] = ringcolor +2;
 	boardArray [to_x][to_y] = ringcolor;
@@ -333,6 +354,7 @@ void Board::moveMyRing(int ringcolor, int from_x, int from_y, int to_x, int to_y
 	// 	ASSUMING THAT THE TO AND FROM COORDINATES ARE VALID.
 
 		
+	board.updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y ); //ASSUMING from_x from_y to_x to_y are all in TWOD form.
 
 	boardArray[from_x][from_y] = ringcolor +2;
 	boardArray [to_x][to_y] = ringcolor;
@@ -547,6 +569,13 @@ return neighbours;
 	
 }
 
+// int boardsize = 11;
+// int numberOfRings[2];
+// int myIDboard,opponentIDboard;
+// std::vector<Point> myringPositions, opponentringPositions;
+// int boardArray [11] [11];
+// bool validArray [11] [11];
+// int action[4];
 
 string Board::removeRing(int opponentID ){
 	string removedMarkersRings ="";
@@ -557,7 +586,25 @@ string Board::removeRing(int opponentID ){
 		for(int i= 0; i<=6;i++ ){
 			if(boardArray[j][i] == mcolor && boardArray[j][i+1] == mcolor && boardArray[j][i+2] == mcolor && boardArray[j][i+3] == mcolor  
 				&& boardArray[j][i+4] == mcolor){
-				// do something.
+				// do something-- make all pos of markers empty and valid-true; remove one ring and update things in the board-- RS 1 2 RE 4 16 X 3 4
+
+				validArray[j][i]=true;validArray[j][i+1]=true;validArray[j][i+2]=true;
+				validArray[j][i+3]=true;validArray[j][i+4]=true;
+				boardArray[j][i]=-1;boardArray[j][i+1]=-1;boardArray[j][i+2]=-1;
+				boardArray[j][i+3]=-1;boardArray[j][i+4]=-1;
+				numberOfRings[opponentID]--;
+				int ringXpos1,ringXpos2;
+				if(ringcolor==myIDboard){ringXpos1=myringPositions[0].getx(); ringXpos2=myringPositions[0].gety();
+										 myringPositions.erase(myringPositions.begin());}
+				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
+										opponentringPositions.erase(opponentringPositions.begin());}
+			Point pstart,pend,ringX,
+			pstart.set(j, i); pend.set(j ,i+4); ringX.set(ringXpos1, ringXpos2); 
+
+			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
+			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
+			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
+
 			}
 		}
 	}
@@ -567,6 +614,24 @@ string Board::removeRing(int opponentID ){
 			if(boardArray[i][j] == mcolor && boardArray[i+1][j] == mcolor && boardArray[i+2][j] == mcolor && boardArray[i+3][j] == mcolor  
 				&& boardArray[i+4][j] == mcolor){
 				// do something.
+				validArray[i][j]=true;validArray[i+1][j]=true;validArray[i+2][j]=true;
+				validArray[i+3][j]=true;validArray[i+4][j]=true;
+				boardArray[i][j]=-1;boardArray[i+1][j]=-1;boardArray[i+2][j]=-1;
+				boardArray[i+3][j]=-1;boardArray[i+4][j]=-1;
+				numberOfRings[opponentID]--;
+				int ringXpos1,ringXpos2;
+				if(ringcolor==myIDboard){ringXpos1=myringPositions[0].getx(); ringXpos2=myringPositions[0].gety();
+										 myringPositions.erase(myringPositions.begin());}
+				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
+										opponentringPositions.erase(opponentringPositions.begin());}
+			Point pstart,pend,ringX,
+			pstart.set( i,j); pend.set(i+4 ,j); ringX.set(ringXpos1, ringXpos2); 
+
+			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
+			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
+			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
+
+			
 			}
 		}
 	}
@@ -576,6 +641,23 @@ string Board::removeRing(int opponentID ){
 			if(boardArray[k+i][i] == mcolor && boardArray[k+i+1][i+1] == mcolor && boardArray[k+i+2][i+2] == mcolor && boardArray[k+i+3][i+3] == mcolor  
 				&& boardArray[k+i+4][i+4] == mcolor){
 				// do something.
+				validArray[k+i][i]=true;validArray[k+i+1][i+1]=true;validArray[k+i+2][i+2]=true;
+				validArray[k+i+3][i+3]=true;validArray[k+i+4][i+4]=true;
+				boardArray[k+i][i]=-1;boardArray[k+i+1][i+1]=-1;boardArray[k+i+2][i+2]=-1;
+				boardArray[k+i+3][i+3]=-1;boardArray[k+i+4][i+4]=-1;
+				numberOfRings[opponentID]--;
+				int ringXpos1,ringXpos2;
+				if(ringcolor==myIDboard){ringXpos1=myringPositions[0].getx(); ringXpos2=myringPositions[0].gety();
+										 myringPositions.erase(myringPositions.begin());}
+				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
+										opponentringPositions.erase(opponentringPositions.begin());}
+			Point pstart,pend,ringX,
+			pstart.set(k+i, i); pend.set(k+i+4 ,i+4); ringX.set(ringXpos1, ringXpos2); 
+
+			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
+			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
+			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
+
 			}
 		}  
 	}	
@@ -586,6 +668,23 @@ string Board::removeRing(int opponentID ){
 		if(boardArray[i][i] == mcolor && boardArray[i+1][i+1] == mcolor && boardArray[i+2][i+2] == mcolor && boardArray[i+3][i+3] == mcolor  
 				&& boardArray[i+4][i+4] == mcolor){
 				// do something.
+				validArray[i][i]=true;validArray[i+1][i+1]=true;validArray[i+2][i+2]=true;
+				validArray[i+3][i+3]=true;validArray[i+4][i+4]=true;
+				boardArray[i][i]=-1;boardArray[i+1][i+1]=-1;boardArray[i+2][i+2]=-1;
+				boardArray[i+3][i+3]=-1;boardArray[i+4][i+4]=-1;
+				numberOfRings[opponentID]--;
+				int ringXpos1,ringXpos2;
+				if(ringcolor==myIDboard){ringXpos1=myringPositions[0].getx(); ringXpos2=myringPositions[0].gety();
+										 myringPositions.erase(myringPositions.begin());}
+				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
+										opponentringPositions.erase(opponentringPositions.begin());}
+			Point pstart,pend,ringX,
+			pstart.set(i, i); pend.set(i+4 ,i+4); ringX.set(ringXpos1, ringXpos2); 
+
+			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
+			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
+			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
+
 			}
 	}
 
@@ -596,6 +695,24 @@ string Board::removeRing(int opponentID ){
 			if(boardArray[i][k+i] == mcolor && boardArray[i+1][k+i+1] == mcolor && boardArray[i+2][k+i+2] == mcolor && boardArray[i+3][k+i+3] == mcolor  
 				&& boardArray[i+4][k+i+4] == mcolor){
 				// do something.
+				validArray[i][k+i]=true;validArray[i+1][k+i+1]=true;validArray[i+2][k+i+2]=true;
+				validArray[i+3][k+i+3]=true;validArray[i+4][k+i+4]=true;
+				boardArray[i][k+i]=-1;boardArray[i+1][k+i+1]=-1;boardArray[i+2][k+i+2]=-1;
+				boardArray[i+3][k+i+3]=-1;boardArray[i+4][k+i+4]=-1;
+				numberOfRings[opponentID]--;
+				int ringXpos1,ringXpos2;
+				if(ringcolor==myIDboard){ringXpos1=myringPositions[0].getx(); ringXpos2=myringPositions[0].gety();
+										 myringPositions.erase(myringPositions.begin());}
+				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
+										opponentringPositions.erase(opponentringPositions.begin());}
+			Point pstart,pend,ringX,
+			pstart.set(i, k+i); pend.set(i+4 ,k+i+4); ringX.set(ringXpos1, ringXpos2); 
+
+			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
+			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
+			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
+
+			
 			}
 		}  
 	}
