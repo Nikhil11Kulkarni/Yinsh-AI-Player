@@ -153,6 +153,7 @@ Board::Board ( )
     for(int i = 0;i<=10;i++){
     	for(int j =0;j<=10;j++){
     		validArray[i][j] = false;
+    		validBoardArray[i][j]=false;
     	}
     }
 
@@ -160,36 +161,47 @@ Board::Board ( )
 
     for(int j =1; j<=4;j++){
     	validArray[0][j] = true;
+	    validBoardArray[0][j]=true;
     }
     for(int j =0; j<=6;j++){
     	validArray[1][j] = true;
+	    validBoardArray[1][j]=true;
     }
     for(int j =0; j<=7;j++){
     	validArray[2][j] = true;
+	    validBoardArray[2][j]=true;
     }
     for(int j =0; j<=8;j++){
     	validArray[3][j] = true;
+	    validBoardArray[3][j]=true;
     }
     for(int j =0; j<=9;j++){
     	validArray[4][j] = true;
+	    validBoardArray[4][j]=true;
     }
     for(int j =1; j<=9;j++){
     	validArray[5][j] = true;
+	    validBoardArray[5][j]=true;
     }
     for(int j =1; j<=10;j++){
     	validArray[6][j] = true;
+ 	    validBoardArray[6][j]=true;
     }
     for(int j =2; j<=10;j++){
     	validArray[7][j] = true;
+  	    validBoardArray[7][j]=true;
     }
     for(int j =3; j<=10;j++){
     	validArray[8][j] = true;
+	    validBoardArray[8][j]=true;
     }
     for(int j =4; j<=10;j++){
     	validArray[9][j] = true;
+	    validBoardArray[9][j]=true; 
     }
     for(int j =6; j<=9;j++){
     	validArray[10][j] = true;
+	    validBoardArray[10][j]=true;
     }
 }
 
@@ -497,7 +509,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 0
 	int i=1;int flag =0;
-	while(py+i<=10 && (boardArray[px][py+i] == 2 || boardArray[px][py+i] == 3 )){
+	while(py+i<=10 && (boardArray[px][py+i] == 2 || boardArray[px][py+i] == 3 ) && validBoardArray[px][py+i]==true){
 		i++;
 		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) flag=1;
 	}
@@ -527,7 +539,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 1
 	i=1;flag =0;
-	while(py+i<=10 && px+i<=10 && (boardArray[px+i][py+i] == 2 || boardArray[px+i][py+i] == 3 )){
+	while(py+i<=10 && px+i<=10 && (boardArray[px+i][py+i] == 2 || boardArray[px+i][py+i] == 3 ) && validBoardArray[px+i][py+i]==true){
 		i++;
 		if(boardArray[px+i][py+i]==0||boardArray[px+i][py+i]==1) flag=1;
 	}
@@ -554,7 +566,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 2
 	i=1;flag =0;
-	while(px+i<=10 && (boardArray[px+i][py] == 2 || boardArray[px+i][py] == 3 )){
+	while(px+i<=10 && (boardArray[px+i][py] == 2 || boardArray[px+i][py] == 3 )&& validBoardArray[px+i][py]==true){
 		i++;
 		if(boardArray[px+i][py]==0||boardArray[px+i][py]==1) flag=1;
 	}
@@ -581,7 +593,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 3
 	i=1;flag =0;
-	while(py-i<=0 && (boardArray[px][py-i] == 2 || boardArray[px][py-i] == 3 )){
+	while(py-i<=0 && (boardArray[px][py-i] == 2 || boardArray[px][py-i] == 3 )&& validBoardArray[px][py-i]==true){
 		i++;
 		if(boardArray[px][py-i]==0||boardArray[px][py-i]==1) flag=1;
 	}
@@ -608,7 +620,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 4
 	i=1;flag =0;
-	while(py-i>=0 && px-i>=0 && (boardArray[px-i][py-i] == 2 || boardArray[px-i][py-i] == 3 )){
+	while(py-i>=0 && px-i>=0 && (boardArray[px-i][py-i] == 2 || boardArray[px-i][py-i] == 3 )&& validBoardArray[px-i][py-i]==true){
 		i++;
 		if(boardArray[px-i][py-i]==0||boardArray[px-i][py-i]==1) flag=1;
 	}
@@ -635,7 +647,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 5
 	i=1;flag =0;
-	while(px-i>=0 && (boardArray[px-i][py] == 2 || boardArray[px-i][py] == 3)){
+	while(px-i>=0 && (boardArray[px-i][py] == 2 || boardArray[px-i][py] == 3)&& validBoardArray[px-i][py]==true){
 		i++;
 		if(boardArray[px-i][py]==0||boardArray[px-i][py]==1) flag=1;
 	}

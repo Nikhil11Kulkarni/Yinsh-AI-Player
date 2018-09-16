@@ -28,6 +28,8 @@ Point twod_from_hex (Point p);
 	
 Point hex_from_twod (Point p);
 
+  
+
 class Board{
 	public:
 	int boardsize = 11;
@@ -37,6 +39,8 @@ class Board{
 	std::vector<Point> myringPositions, opponentringPositions;
 	int boardArray [11] [11];
     bool validArray [11] [11];
+    bool validBoardArray [11] [11];
+
 	int action[4];
     
     void setAction(int from_x,int from_y, int to_x,int to_y);
