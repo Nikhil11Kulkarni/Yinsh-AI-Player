@@ -193,6 +193,22 @@ Board::Board ( )
 
 Board Board::clone(){
 	Board newboard;
+newboard.boardsize = this->boardsize;
+newboard.numberOfRings[0] = this-> numberOfRings[0];
+newboard.numberOfRings[1] = this-> numberOfRings[1];
+newboard.myIDboard = this->myIDboard;
+newboard.opponentIDboard=this->opponentIDboard;
+
+	for(int i=0;i<this->myringPositions.size();i++){
+		Point p1; p1.set(this->myringPositions[i].getx() , this->myringPositions[i].gety());
+		newboard.myringPositions.push_back(p1);
+	}
+	
+	for(int i=0;i<this->opponentringPositions.size();i++){
+		Point p1; p1.set(this->opponentringPositions[i].getx() , this->opponentringPositions[i].gety());
+		newboard.opponentringPositions.push_back(p1);
+	}
+
 	for(int i = 0;i<=10;i++){
     	for(int j =0;j<=10;j++){
     		newboard.boardArray[i][j] = this->boardArray[i][j] ;
@@ -200,6 +216,14 @@ Board Board::clone(){
     	}
     }
 }
+// int boardsize = 11;
+// int numberOfRings[2];
+// int myIDboard,opponentIDboard;
+// std::vector<Point> myringPositions, opponentringPositions;
+// int boardArray [11] [11];
+// bool validArray [11] [11];
+// int action[4];
+
 
 
 void Board::setmyRing(int ringcolor,int px, int py){
@@ -211,6 +235,10 @@ void Board::setmyRing(int ringcolor,int px, int py){
 // 	py=p2.gety();
 // 	cout<<" px:"<<px<<" py:"<<py<<endl;
 // 	}
+	Point p1; p1.set( px, py);
+	if(ringcolor==myIDboard)this->myringPositions.push_back(p1);
+	if(ringcolor==opponentIDboard)this->opponentringPositions.push_back(p1);
+	
 	if(boardArray[px][py] == -1 && validArray[px][py] == true )  
 		{	boardArray[px][py] = ringcolor;
 			validArray[px][py] = false;       // CHECK THIS !!!!!!!
@@ -228,6 +256,10 @@ void Board::setRing(int ringcolor,int px, int py){
 	px=p2.getx();
 	py=p2.gety();
 	cout<<"opponent- px:"<<px<<" py:"<<py<<endl;
+
+	Point p1; p1.set( px, py);
+	if(ringcolor==myIDboard)this->myringPositions.push_back(p1);
+	if(ringcolor==opponentIDboard)this->opponentringPositions.push_back(p1);
 
 	if(boardArray[px][py] == -1 && validArray[px][py] == true )  
 		{	boardArray[px][py] = ringcolor;
