@@ -554,18 +554,18 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 2
 	i=1;flag =0;
-	while(py-i>=0 && px+i<=10 && (boardArray[px+i][py-i] == 2 || boardArray[px+i][py-i] == 3 )){
+	while(px+i<=10 && (boardArray[px+i][py] == 2 || boardArray[px+i][py] == 3 )){
 		i++;
-		if(boardArray[px+i][py-i]==0||boardArray[px+i][py-i]==1) flag=1;
+		if(boardArray[px+i][py]==0||boardArray[px+i][py]==1) flag=1;
 	}
-	if(boardArray[px+1][py-1]==0||boardArray[px+1][py-1]==1)flag =1;
+	if(boardArray[px+1][py]==0||boardArray[px+1][py]==1)flag =1;
 
 	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
 		  int k=1;
-		  while(py-k>=0 && px+k<=10 && boardArray[px+k][py-k] == -1 && validArray[px+k][py-k] == true ){
+		  while(px+k<=10 && boardArray[px+k][py] == -1 && validArray[px+k][py] == true ){
 		  	Board b = this->clone();
-		  	b.moveMyRing(ringcolor,px,py,px+k,py-k);
-		    b.setAction(px,py,px+k,py-k);
+		  	b.moveMyRing(ringcolor,px,py,px+k,py);
+		    b.setAction(px,py,px+k,py);
 		    neighbours.push_back(b);
 		    k++;
 		  }
@@ -573,8 +573,8 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 	else if(flag==0) {
 				Board p2 = this->clone(); 
-				p2.moveMyRing(ringcolor,px,py,px+i,py-i);
-			    p2.setAction(px,py,px+i,py-i);
+				p2.moveMyRing(ringcolor,px,py,px+i,py);
+			    p2.setAction(px,py,px+i,py);
 				neighbours.push_back(p2);
 	}
 	
@@ -635,18 +635,18 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 // in direction 5
 	i=1;flag =0;
-	while(py+i<=10 && px-i>=0 && (boardArray[px-i][py+i] == 2 || boardArray[px-i][py+i] == 3)){
+	while(px-i>=0 && (boardArray[px-i][py] == 2 || boardArray[px-i][py] == 3)){
 		i++;
-		if(boardArray[px-i][py+i]==0||boardArray[px-i][py+i]==1) flag=1;
+		if(boardArray[px-i][py]==0||boardArray[px-i][py]==1) flag=1;
 	}
-	if(boardArray[px-1][py+1]==0||boardArray[px-1][py+1]==1)flag =1;
+	if(boardArray[px-1][py]==0||boardArray[px-1][py]==1)flag =1;
 
 	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
 		  int k=1;
-		  while(py+k<=10 && px-k>=0 && boardArray[px-k][py+k] == -1 && validArray[px-k][py+k] == true ){
+		  while(px-k>=0 && boardArray[px-k][py] == -1 && validArray[px-k][py] == true ){
 		  	Board b = this->clone();
-		  	b.moveMyRing(ringcolor,px,py,px-k,py+k);
-		    b.setAction(px,py,px-k,py+k);
+		  	b.moveMyRing(ringcolor,px,py,px-k,py);
+		    b.setAction(px,py,px-k,py);
 		    neighbours.push_back(b);
 		  	k++;
 		  }
@@ -654,8 +654,8 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 
 	else if(flag==0){ 
 				Board p5 = this->clone(); 
-				p5.moveMyRing(ringcolor,px,py,px-i,py+i);
-				p5.setAction(px,py,px-i,py+i);
+				p5.moveMyRing(ringcolor,px,py,px-i,py);
+				p5.setAction(px,py,px-i,py);
 				neighbours.push_back(p5);
 	}
 		
