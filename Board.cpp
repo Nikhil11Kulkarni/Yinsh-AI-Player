@@ -102,7 +102,10 @@ Point twod_from_hex (Point p){
 Point hex_from_twod (Point p){
 	int px = p.getx();
 	int py = p.gety();
-	int h = max(abs(px-5),abs(py-5));  
+	int h;
+	if(px<=5 && py>=5)h=py-px;
+	else if(py<=5&&py>=5) h=px-py;
+	else h = max(abs(px-5),abs(py-5));   
 	int c;
 
 	if(py == 5+h){
@@ -443,7 +446,10 @@ void Board::setID( int id1,int id2){
 Point Board::hex_from_twod (Point p){
 	int px = p.getx();
 	int py = p.gety();
-	int h = max(abs(px-5),abs(py-5));  
+	int h;
+	if(px<=5 && py>=5)h=py-px;
+	else if(py<=5&&py>=5) h=px-py;
+	else h = max(abs(px-5),abs(py-5));   
 	int c;
 
 	if(py == 5+h){
@@ -501,8 +507,8 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  while(py+k<=10 && boardArray[px][py+k] == -1 && validArray[px][py+k]== true){
 		  	k++;
 		  	Board b = this->clone();
-		  	b.moveMyRing(ringcolor,px,py,px,py+i);
-		    b.setAction(px,py,px,py+i);
+		  	b.moveMyRing(ringcolor,px,py,px,py+k);
+		    b.setAction(px,py,px,py+k);
 		    neighbours.push_back(b);
 		    // cout<<"in while 0\n";
 		  }
@@ -668,7 +674,7 @@ return neighbours;
 string Board::removeRing(int opponentID ){
 	string removedMarkersRings ="";
 	int ringcolor = opponentID;
-	this->numberOfRings[ringcolor] --;
+	// this->numberOfRings[ringcolor] --;
 	int mcolor = ringcolor+2;
 	for(int j = 0; j<11;j++){
 		for(int i= 0; i<=6;i++ ){
