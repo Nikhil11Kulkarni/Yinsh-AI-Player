@@ -276,13 +276,7 @@ while(true){
 
 	updateBoardOpponentMove( opponentID , opponentMove);
 	board.printBoard();
-    //OUR Turn... Move wisely! Best luck!
 
-//First 5 moves must place a ring.
-//Thereafter search for "Removable Rows"--if T then remove them and remove a ring for every row.
-//else move a ring and 
-//Remove as many Removable Rows as possible.
-//At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
 if(board.numberOfRings[myID]==5)placingDone=true;
 string mymove;
 
@@ -333,4 +327,15 @@ timeAllowed=timeAllowed - timeelapsed;
 
 }
 
+//PLEASE DONOT DELETE THIS COMMANDS
  
+//OUR Turn... Move wisely! Best luck!
+
+//First 5 moves must place a ring.
+//Thereafter search for "Removable Rows"--if T then remove them and remove a ring for every row.
+//else move a ring and 
+//Remove as many Removable Rows as possible.
+//At specific points check for win-lose-draw condition of the board. and exit the loop accordingly & print score + results.
+
+
+
