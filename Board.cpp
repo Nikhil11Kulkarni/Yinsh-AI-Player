@@ -259,7 +259,7 @@ void Board::setRing(int ringcolor,int px, int py){
 	Point p2=twod_from_hex(p1);
 	px=p2.getx();
 	py=p2.gety();
-	cout<<"opponent- px:"<<px<<" py:"<<py<<endl;
+	//cout<<"opponent- px:"<<px<<" py:"<<py<<endl;
 
 	Point ptoadd; ptoadd.set( px, py);
 	if(ringcolor==myIDboard)this->myringPositions.push_back(ptoadd);
@@ -308,7 +308,7 @@ void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 	to_x = p2changed.getx(); 
 	to_y = p2changed.gety();
 	
-	cout<<"opp-from_x:"<<from_x<<" from_y:"<<from_y<<" to_x:"<<to_x<<" to_y:"<<to_y<<endl;
+	//cout<<"opp-from_x:"<<from_x<<" from_y:"<<from_y<<" to_x:"<<to_x<<" to_y:"<<to_y<<endl;
 
 	this->updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y );
 
@@ -880,7 +880,7 @@ vector<Board> Board::getSuccessors(int ringcolor){
 	for(int i =0;i<=10;i++){
 		for(int j =0;j<=10;j++){
 			if(boardArray[i][j] == ringcolor){
-				cout<<"looking for neighbours of "<<i<<","<<j<<endl;
+				//cout<<"looking for neighbours of "<<i<<","<<j<<endl;
 				vector<Board> n = this->getNeighbours(i,j,ringcolor);
 				succ.insert(succ.end(),n.begin(),n.end());
 			}
