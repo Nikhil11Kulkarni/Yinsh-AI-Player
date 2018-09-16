@@ -8,6 +8,7 @@ using namespace std;
 
 //GLOBAL VARIABLES
 Board board; 
+Board ansboard; 
 int myID=1,opponentID=0;
 
 
@@ -181,12 +182,15 @@ int minValue(Board currentBoard, int depth){
 }
 
 int maxValue(Board currentBoard , int depth){
+		//cout<<"maxValue:start"<<endl;
 	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
-	int v=-1;
+	int v=std::numeric_limits<int>::min();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
 		int minofneighbour= minValue(currentNeighbours[i],depth);
+		//cout<<"maxValue:update v:"<<minofneighbour <<endl;
+		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
 		v= max(v,  minofneighbour);
 	}
 	return v;
@@ -195,14 +199,24 @@ int maxValue(Board currentBoard , int depth){
 
 string minimaxDecision(Board currentBoard){
 	int depth=0;
+	string ans1="";
+		//cout<<"minimaxDecision:start"<<endl;
 	int v=maxValue(currentBoard, depth);
-	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
-	for(int i=0;i<currentNeighbours.size();i++){
-		if(evaluation(currentNeighbours[i])==v){ 
-		board=currentBoard ; 
+// 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
+// 	cout<<"minimaxDecision:got v:size"<<currentNeighbours.size()<<endl;
+// 	for(int i=0;i<currentNeighbours.size();i++){
+// 		cout<<i<<":11minimaxDecision:got v:"<<v<<endl;
+// 		if(evaluation(currentNeighbours[i])==v){
+// 		cout<<"yippie"<<endl; 
+// 		}
+// 		//return action string here.
+// 	}
+//	return ans1;
+
+board=ansboard ; 
 Point p1,p2;
-	p1.set(currentNeighbours[i].action[0],currentNeighbours[i].action[1]);
-	p2.set(currentNeighbours[i].action[2],currentNeighbours[i].action[3]);
+	p1.set(ansboard.action[0],ansboard.action[1]);
+	p2.set(ansboard.action[2],ansboard.action[3]);
 	Point p1changed=hex_from_twod(p1);
 	Point p2changed=hex_from_twod(p2);
 	
@@ -218,9 +232,7 @@ Point p1,p2;
 		ans=ans+"M " + to_string(to_x)+" "+to_string(to_y);//"S x y M x y";
 		
 		return ans;
-		}
-		//return action string here.
-	}
+
 }
 
 
