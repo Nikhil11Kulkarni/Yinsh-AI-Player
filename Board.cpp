@@ -433,83 +433,164 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	// py=p2.gety();
 
 	vector <Board> neighbours;
+
 	// in direction 0
-	int i=1;int flag =0; Board p0 = this->clone(); 
-	cout<<"in neighbour function after cloning"<<endl;
-	p0.printBoard();
-	while(py+i<=10 && boardArray[px][py+i] == ringcolor+2){
+	int i=1;int flag =0;
+	while(py+i<=10 && (boardArray[px][py+i] == 2 || boardArray[px][py+i] == 3 )){
 		i++;
 		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) flag=1;
 	}
+
 	if(boardArray[px][py+1]==0||boardArray[px][py+1]==1)flag =1;
-	if(flag==0){ p0.moveMyRing(ringcolor,px,py,px,py+i);
-				 p0.setAction(px,py,px,py+i);
-				 // cout<<"in neighbour function : "<<"px,py,i is "<<px<<","<<py<<","<<i<<endl;
-				 // cout<<"printing board in neighbour function"<<endl;
-				 // p0.printBoard();
-				 neighbours.push_back(p0);}
+	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
+		  int k=1;
+		  while(py+k<=10 && boardArray[px][py+k] == -1 ){
+		  	Board b = this->clone();
+		  	b.moveMyRing(ringcolor,px,py,px,py+i);
+		    b.setAction(px,py,px,py+i);
+		    neighbours.push_back(b);
+		  }
+	}
+	else if(flag==0){      //if the position is after the markers.
+			Board p0 = this->clone(); 
+			p0.moveMyRing(ringcolor,px,py,px,py+k);
+			p0.setAction(px,py,px,py+k);
+			// cout<<"in neighbour function : "<<"px,py,i is "<<px<<","<<py<<","<<i<<endl;
+			// cout<<"printing board in neighbour function"<<endl;
+			// p0.printBoard();
+			neighbours.push_back(p0);
+	}
 
 
-	// in direction 1
-	i=1;flag =0;Board p1 = this->clone(); 
-	while(py+i<=10 && px+i<=10 && boardArray[px+i][py+i] == ringcolor+2){
+// in direction 1
+	i=1;flag =0;
+	while(py+i<=10 && px+i<=10 && (boardArray[px+i][py+i] == 2 || boardArray[px+i][py+i] == 3 )){
 		i++;
 		if(boardArray[px+i][py+i]==0||boardArray[px+i][py+i]==1) flag=1;
 	}
 	if(boardArray[px+1][py+1]==0||boardArray[px+1][py+1]==1)flag =1;
-	if(flag==0){ p1.moveMyRing(ringcolor,px,py,px+i,py+i);
-				 p1.setAction(px,py,px+i,py+i);
-				 neighbours.push_back(p1);}
-		// neighbours.push_back(p1.set(px+i,py+i));
 
-	// in direction 2
-	i=1;flag =0;Board p2 = this->clone(); 
-	while(py-i>=0 && px+i<=10 && boardArray[px+i][py-i] == ringcolor+2){
+	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
+		  int k=1;
+		  while(py+k<=10 && px+k<=10 && boardArray[px+k][py+k] == -1 ){
+		  	Board b = this->clone();
+		  	b.moveMyRing(ringcolor,px,py,px+k,py+k);
+		    b.setAction(px,py,px+k,py+k);
+		    neighbours.push_back(b);
+		  }
+	}
+
+	else if(flag==0){ 
+				Board p1 = this->clone(); 
+				p1.moveMyRing(ringcolor,px,py,px+i,py+i);
+				p1.setAction(px,py,px+i,py+i);
+				neighbours.push_back(p1);
+	}
+
+
+// in direction 2
+	i=1;flag =0;
+	while(py-i>=0 && px+i<=10 && (boardArray[px+i][py-i] == 2 || boardArray[px+i][py-i] == 3 )){
 		i++;
 		if(boardArray[px+i][py-i]==0||boardArray[px+i][py-i]==1) flag=1;
 	}
 	if(boardArray[px+1][py-1]==0||boardArray[px+1][py-1]==1)flag =1;
-	if(flag==0) { p2.moveMyRing(ringcolor,px,py,px+i,py-i);
-			      p2.setAction(px,py,px+i,py-i);
-				  neighbours.push_back(p2);}
-		// neighbours.push_back(p2.set(px+i,py-i));
 
-	// in direction 3
-	i=1;flag =0; Board p3 = this->clone(); 
-	while(py-i<=0 && boardArray[px][py-i] == ringcolor+2){
+	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
+		  int k=1;
+		  while(py-k>=0 && px+k<=10 && boardArray[px+k][py-k] == -1 ){
+		  	Board b = this->clone();
+		  	b.moveMyRing(ringcolor,px,py,px+k,py-k);
+		    b.setAction(px,py,px+k,py-k);
+		    neighbours.push_back(b);
+		  }
+	}
+
+	else if(flag==0) {
+				Board p2 = this->clone(); 
+				p2.moveMyRing(ringcolor,px,py,px+i,py-i);
+			    p2.setAction(px,py,px+i,py-i);
+				neighbours.push_back(p2);
+	}
+	
+
+// in direction 3
+	i=1;flag =0;
+	while(py-i<=0 && (boardArray[px][py-i] == 2 || boardArray[px][py-i] == 3 )){
 		i++;
 		if(boardArray[px][py-i]==0||boardArray[px][py-i]==1) flag=1;
 	}
 	if(boardArray[px][py-1]==0||boardArray[px][py-1]==1)flag =1;
-	if(flag==0){ p3.moveMyRing(ringcolor,px,py,px,py-i);
-				 p3.setAction(px,py,px,py-i);
-				 neighbours.push_back(p3); }
-		// neighbours.push_back(p3.set(px,py-i));
 
-	// in direction 4
-	i=1;flag =0;Board p4 = this->clone(); 
-	while(py-i>=0 && px-i>=0 && boardArray[px-i][py-i] == ringcolor+2){
+	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
+		  int k=1;
+		  while(py-k>=0 && boardArray[px][py-k] == -1 ){
+		  	Board b = this->clone();
+		  	b.moveMyRing(ringcolor,px,py,px,py-k);
+		    b.setAction(px,py,px,py-k);
+		    neighbours.push_back(b);
+		  }
+	}
+
+	else if(flag==0){ 
+		 		Board p3 = this->clone(); 
+		        p3.moveMyRing(ringcolor,px,py,px,py-i);
+				p3.setAction(px,py,px,py-i);
+				neighbours.push_back(p3);
+	}
+		
+
+// in direction 4
+	i=1;flag =0;
+	while(py-i>=0 && px-i>=0 && (boardArray[px-i][py-i] == 2 || boardArray[px-i][py-i] == 3 )){
 		i++;
 		if(boardArray[px-i][py-i]==0||boardArray[px-i][py-i]==1) flag=1;
 	}
 	if(boardArray[px-1][py-1]==0||boardArray[px-1][py-1]==1)flag =1;
-	if(flag==0) {p4.moveMyRing(ringcolor,px,py,px-i,py-i);
-				 p4.setAction(px,py,px-i,py-i);
-				 neighbours.push_back(p4);}
-		// neighbours.push_back(p4.set(px-i,py-i));	
 
-	// in direction 5
-	i=1;flag =0; Board p5 = this->clone(); 
-	while(py+i<=10 && px-i>=0 && boardArray[px-i][py+i] == ringcolor+2){
+	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
+		  int k=1;
+		  while(py-k>=0 && px-k>=0 && boardArray[px-k][py-k] == -1 ){
+		  	Board b = this->clone();
+		  	b.moveMyRing(ringcolor,px,py,px-k,py-k);
+		    b.setAction(px,py,px-k,py-k);
+		    neighbours.push_back(b);
+		  }
+	}	
+
+	else if(flag==0) {
+				 Board p4 = this->clone(); 
+		         p4.moveMyRing(ringcolor,px,py,px-i,py-i);
+				 p4.setAction(px,py,px-i,py-i);
+				 neighbours.push_back(p4);
+	}
+		
+
+// in direction 5
+	i=1;flag =0;
+	while(py+i<=10 && px-i>=0 && (boardArray[px-i][py+i] == 2 || boardArray[px-i][py+i] == 3)){
 		i++;
 		if(boardArray[px-i][py+i]==0||boardArray[px-i][py+i]==1) flag=1;
 	}
 	if(boardArray[px-1][py+1]==0||boardArray[px-1][py+1]==1)flag =1;
-	if(flag==0){ p5.moveMyRing(ringcolor,px,py,px-i,py+i);
-				 p5.setAction(px,py,px-i,py+i);
-				 neighbours.push_back(p5);}
-		// neighbours.push_back(p5.set(px-i,py+i));	
 
+	if(i==1 && flag ==0){   //if there is no immediate ring and the adjecent is empty
+		  int k=1;
+		  while(py+k<=10 && px-k>=0 && boardArray[px-k][py+k] == -1 ){
+		  	Board b = this->clone();
+		  	b.moveMyRing(ringcolor,px,py,px-k,py+k);
+		    b.setAction(px,py,px-k,py+k);
+		    neighbours.push_back(b);
+		  }
+	}	
+
+	else if(flag==0){ 
+				Board p5 = this->clone(); 
+				p5.moveMyRing(ringcolor,px,py,px-i,py+i);
+				p5.setAction(px,py,px-i,py+i);
+				neighbours.push_back(p5);
+	}
+		
 
 return neighbours; 
 	
