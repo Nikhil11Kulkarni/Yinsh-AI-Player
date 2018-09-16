@@ -581,13 +581,13 @@ void Board::printBoard(){
 	int c;
     for(int i = 0;i<=10;i++){
 	for(int j = 0;j<=10;j++){
-		c = boardArray[i][j];
-		if(boardArray[i][j]==-1) c = 5;
+		c = boardArray[j][i];
+		if(boardArray[j][i]==-1) c = 5;
 		cout<<c<<" ";
 	}
 	cout<<"                ";
 	for(int j =0;j<=10;j++){
-		cout<<validArray[i][j]<<" ";
+		cout<<validArray[j][i]<<" ";
 	}
 
 	cout<<endl;
