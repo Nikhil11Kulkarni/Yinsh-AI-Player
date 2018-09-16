@@ -34,14 +34,11 @@ class Board{
 	int numberOfRings[2];
 	int myIDboard,opponentIDboard;
 	
-	std::vector<Point> myringPosiotions,opponentringPosiotions;
-	// int mynumberOfRings;
-	// int opponentnumberOfRings;
-	//double 
+	std::vector<Point> myringPositions, opponentringPositions;
 	int boardArray [11] [11];
     bool validArray [11] [11];
-
-    int action[4];
+	int action[4];
+    
     void setAction(int from_x,int from_y, int to_x,int to_y);
 
 	/**
@@ -76,7 +73,7 @@ class Board{
 
 	void setRing(int ringcolor,int px, int py);
 	void setmyRing(int ringcolor,int px, int py);
-
+	void updateRingPosition(int ringcolor ,int from_x, int from_y, int to_x, int to_y );
 	/**
      * to move the position of a ring on the board, and set the board accordingly.
      * 
