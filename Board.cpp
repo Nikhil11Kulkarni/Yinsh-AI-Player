@@ -504,7 +504,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  	b.moveMyRing(ringcolor,px,py,px,py+i);
 		    b.setAction(px,py,px,py+i);
 		    neighbours.push_back(b);
-		    cout<<"in while 0\n";
+		    // cout<<"in while 0\n";
 		  }
 	}
 	else if(flag==0){      //if the position is after the markers.

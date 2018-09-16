@@ -186,15 +186,15 @@ int minValue(Board currentBoard, int depth){
 int maxValue(Board currentBoard , int depth){
 		//cout<<"maxValue:start"<<endl;
 	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
-	cout<<"\n\ncurrentBoard:\n"<<endl;
-	currentBoard.printBoard();
+	// cout<<"\n\ncurrentBoard:\n"<<endl;
+	// currentBoard.printBoard();
 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 	int v=std::numeric_limits<int>::min();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
 		int minofneighbour= minValue(currentNeighbours[i],depth);
-		cout<<"\n\ncurrentNeighbours[i]:\n"<<endl;
-		currentNeighbours[i].printBoard();
+		// cout<<"\n\ncurrentNeighbours[i]:\n"<<endl;
+		// currentNeighbours[i].printBoard();
 		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
 		v= max(v,  minofneighbour);
 	}
@@ -217,7 +217,7 @@ string minimaxDecision(Board currentBoard){
 // 		//return action string here.
 // 	}
 //	return ans1;
-cout<<"\n\nansboard:\n";
+// cout<<"\n\nansboard:\n";
 // ansboard.printBoard();
 board=ansboard ; 
 Point p1,p2;
@@ -261,6 +261,7 @@ if(myID==0){
 string mo1= setInitialRing(); //function sets the board and gives the initial move.
 cout<<mo1<<endl;
 }
+cout<<"h1"<<endl;
 
 while(true){
 
