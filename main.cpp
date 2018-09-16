@@ -10,7 +10,7 @@ using namespace std;
 //GLOBAL VARIABLES
 Board board; 
 Board ansboard; 
-int myID=1,opponentID=0;
+int myID,opponentID;
 
 
 //GLOBAL FUNCTIONS
@@ -184,12 +184,15 @@ int minValue(Board currentBoard, int depth){
 int maxValue(Board currentBoard , int depth){
 		//cout<<"maxValue:start"<<endl;
 	if(depth==1){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
+	cout<<"\n\ncurrentBoard:\n"<<endl;
+	currentBoard.printBoard();
 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 	int v=std::numeric_limits<int>::min();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
 		int minofneighbour= minValue(currentNeighbours[i],depth);
-		//cout<<"maxValue:update v:"<<minofneighbour <<endl;
+		cout<<"\n\ncurrentNeighbours[i]:\n"<<endl;
+		currentNeighbours[i].printBoard();
 		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
 		v= max(v,  minofneighbour);
 	}
@@ -212,7 +215,8 @@ string minimaxDecision(Board currentBoard){
 // 		//return action string here.
 // 	}
 //	return ans1;
-
+cout<<"\n\nansboard:\n";
+// ansboard.printBoard();
 board=ansboard ; 
 Point p1,p2;
 	p1.set(ansboard.action[0],ansboard.action[1]);
@@ -243,6 +247,18 @@ int main() {
 	double totaltime;
 	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
+		int playernum,boardsizeHexagon;
+		cin>>playernum;
+			myID=playernum - 1; // as it is either 0 OR 1
+			opponentID = (3 -playernum) -1;//planum=1--myid=0--oppid=1   planum=2--myid=1--oppid=0
+			board.setID(myID,opponentID);
+		cin>>boardsizeHexagon; //NOT USED UNTIL NOW
+		cin>>;//PUT TIME 
+
+if(myID==0){
+string mo1= setInitialRing(); //function sets the board and gives the initial move.
+cout<<mo1<<endl;
+}
 
 while(true){
 
@@ -272,13 +288,18 @@ string mymove;
 	}
 
 	else{
+		string strRemove1 = "",strRemove2 = "";
+
 		cout<<"b1"<<endl;
-		board.removeRing(myID);
+		strRemove1= board.removeRing(myID);
 		cout<<"b2"<<endl;
 		mymove = minimaxDecision(board);
 		cout<<"b3:------"<<mymove<<endl;		
-		board.removeRing(myID);
+		strRemove2= board.removeRing(myID);
 		cout<<"b4"<<endl;
+	if(strRemove1!=""){mymove = strRemove1 +" "+ mymove;}
+	if(strRemove2!=""){	mymove=mymove+" " +strRemove2 ;}
+
 		cout<<mymove<<endl;	
 	}
 	cout<<"b5"<<endl;
