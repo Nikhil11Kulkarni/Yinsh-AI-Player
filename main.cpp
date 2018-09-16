@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <bits/stdc++.h>
+#include <ctime>
 #include "Board.h"
 using namespace std;
 
@@ -67,7 +68,6 @@ string setInitialRing(){
 
 	cout<<"NONE OF THE SORROUNDING HAVE SPACE TO PUT A RING :CHECK!!!";
 	return initialmove;
-
 }
 
 
@@ -244,6 +244,7 @@ Point p1,p2;
 int main() {
 
 	bool placingDone = false;
+	double totaltime;
 	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
 		int playernum,boardsizeHexagon;
@@ -260,8 +261,15 @@ cout<<mo1<<endl;
 }
 
 while(true){
+
+
 	string opponentMove;
 	std::getline (std::cin,opponentMove);
+	
+	std::clock_t start1;
+	double duration;
+	start = std::clock();
+
 	updateBoardOpponentMove( opponentID , opponentMove);
 	board.printBoard();
     //OUR Turn... Move wisely! Best luck!
@@ -305,6 +313,11 @@ if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opp
 	cout<<"GAME OVER BROS: WIN:"<<winner<<" and LOSS:"<<unlucky<<endl;
 	break;
 }
+
+
+	std::clock_t end1;
+	end1 = std::clock();
+	totaltime += end1 - start1;
 
 }
 
