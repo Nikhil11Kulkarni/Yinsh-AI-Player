@@ -244,7 +244,7 @@ Point p1,p2;
 int main() {
 
 	bool placingDone = false;
-	double totaltime;
+	double totaltime,timeAllowed;
 	//cin--for detecting who is playing first. by default -- opponent is playing first.
 	//if first move is ours then do it here in 1 if loop // alloted values here---> myID,opponentID (0 ,1-by default)
 		int playernum,boardsizeHexagon;
@@ -253,7 +253,7 @@ int main() {
 			opponentID = (3 -playernum) -1;//planum=1--myid=0--oppid=1   planum=2--myid=1--oppid=0
 			board.setID(myID,opponentID);
 		cin>>boardsizeHexagon; //NOT USED UNTIL NOW
-		cin>>;//PUT TIME 
+		cin>>timeAllowed ;//PUT TIME 
 
 if(myID==0){
 string mo1= setInitialRing(); //function sets the board and gives the initial move.
@@ -268,7 +268,7 @@ while(true){
 	
 	std::clock_t start1;
 	double duration;
-	start = std::clock();
+	start1 = std::clock();
 
 	updateBoardOpponentMove( opponentID , opponentMove);
 	board.printBoard();

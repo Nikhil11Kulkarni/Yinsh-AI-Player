@@ -258,9 +258,9 @@ void Board::setRing(int ringcolor,int px, int py){
 	py=p2.gety();
 	cout<<"opponent- px:"<<px<<" py:"<<py<<endl;
 
-	Point p1; p1.set( px, py);
-	if(ringcolor==myIDboard)this->myringPositions.push_back(p1);
-	if(ringcolor==opponentIDboard)this->opponentringPositions.push_back(p1);
+	Point ptoadd; ptoadd.set( px, py);
+	if(ringcolor==myIDboard)this->myringPositions.push_back(ptoadd);
+	if(ringcolor==opponentIDboard)this->opponentringPositions.push_back(ptoadd);
 
 	if(boardArray[px][py] == -1 && validArray[px][py] == true )  
 		{	boardArray[px][py] = ringcolor;
@@ -306,7 +306,7 @@ void Board::moveRing(int ringcolor, int from_x, int from_y, int to_x, int to_y){
 	to_y = p2changed.gety();
 	
 	
-	board.updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y );
+	this->updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y );
 
 	boardArray[from_x][from_y] = ringcolor +2;
 	boardArray [to_x][to_y] = ringcolor;
@@ -354,7 +354,7 @@ void Board::moveMyRing(int ringcolor, int from_x, int from_y, int to_x, int to_y
 	// 	ASSUMING THAT THE TO AND FROM COORDINATES ARE VALID.
 
 		
-	board.updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y ); //ASSUMING from_x from_y to_x to_y are all in TWOD form.
+	this->updateRingPosition(ringcolor ,from_x,  from_y, to_x, to_y ); //ASSUMING from_x from_y to_x to_y are all in TWOD form.
 
 	boardArray[from_x][from_y] = ringcolor +2;
 	boardArray [to_x][to_y] = ringcolor;
@@ -507,8 +507,8 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	}
 	else if(flag==0){      //if the position is after the markers.
 			Board p0 = this->clone(); 
-			p0.moveMyRing(ringcolor,px,py,px,py+k);
-			p0.setAction(px,py,px,py+k);
+			p0.moveMyRing(ringcolor,px,py,px,py+i);
+			p0.setAction(px,py,px,py+i);
 			// cout<<"in neighbour function : "<<"px,py,i is "<<px<<","<<py<<","<<i<<endl;
 			// cout<<"printing board in neighbour function"<<endl;
 			// p0.printBoard();
@@ -679,7 +679,7 @@ string Board::removeRing(int opponentID ){
 										 myringPositions.erase(myringPositions.begin());}
 				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
 										opponentringPositions.erase(opponentringPositions.begin());}
-			Point pstart,pend,ringX,
+			Point pstart,pend,ringX;
 			pstart.set(j, i); pend.set(j ,i+4); ringX.set(ringXpos1, ringXpos2); 
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
@@ -705,7 +705,7 @@ string Board::removeRing(int opponentID ){
 										 myringPositions.erase(myringPositions.begin());}
 				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
 										opponentringPositions.erase(opponentringPositions.begin());}
-			Point pstart,pend,ringX,
+			Point pstart,pend,ringX;
 			pstart.set( i,j); pend.set(i+4 ,j); ringX.set(ringXpos1, ringXpos2); 
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
@@ -732,7 +732,7 @@ string Board::removeRing(int opponentID ){
 										 myringPositions.erase(myringPositions.begin());}
 				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
 										opponentringPositions.erase(opponentringPositions.begin());}
-			Point pstart,pend,ringX,
+			Point pstart,pend,ringX;
 			pstart.set(k+i, i); pend.set(k+i+4 ,i+4); ringX.set(ringXpos1, ringXpos2); 
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
@@ -759,7 +759,7 @@ string Board::removeRing(int opponentID ){
 										 myringPositions.erase(myringPositions.begin());}
 				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
 										opponentringPositions.erase(opponentringPositions.begin());}
-			Point pstart,pend,ringX,
+			Point pstart,pend,ringX;
 			pstart.set(i, i); pend.set(i+4 ,i+4); ringX.set(ringXpos1, ringXpos2); 
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
@@ -786,7 +786,7 @@ string Board::removeRing(int opponentID ){
 										 myringPositions.erase(myringPositions.begin());}
 				if(ringcolor==opponentIDboard){ringXpos1=opponentringPositions[0].getx(); ringXpos2=opponentringPositions[0].gety();
 										opponentringPositions.erase(opponentringPositions.begin());}
-			Point pstart,pend,ringX,
+			Point pstart,pend,ringX;
 			pstart.set(i, k+i); pend.set(i+4 ,k+i+4); ringX.set(ringXpos1, ringXpos2); 
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;

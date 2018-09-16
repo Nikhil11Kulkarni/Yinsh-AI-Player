@@ -73,7 +73,7 @@ class Board{
 
 	void setRing(int ringcolor,int px, int py);
 	void setmyRing(int ringcolor,int px, int py);
-
+	void updateRingPosition(int ringcolor ,int from_x, int from_y, int to_x, int to_y );
 	/**
      * to move the position of a ring on the board, and set the board accordingly.
      * 
