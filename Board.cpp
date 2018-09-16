@@ -330,6 +330,11 @@ Point Board::twod_from_hex (Point p){
 
 }
 
+void Board::setID( int id1,int id2){
+	this->myIDboard=id1;
+	this->opponentIDboard=id2;
+}
+
 
 Point Board::hex_from_twod (Point p){
 	int px = p.getx();
@@ -450,7 +455,8 @@ return neighbours;
 }
 
 
-void Board::removeRing(int opponentID ){
+string Board::removeRing(int opponentID ){
+	string removedMarkersRings ="";
 	int ringcolor = opponentID;
 	this->numberOfRings[ringcolor] --;
 	int mcolor = ringcolor+2;
@@ -501,6 +507,7 @@ void Board::removeRing(int opponentID ){
 		}  
 	}
 
+return removedMarkersRings;
 }
 
 // given the string of turn of the opponent remove his markers from the board. 

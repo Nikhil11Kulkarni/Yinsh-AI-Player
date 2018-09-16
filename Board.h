@@ -29,6 +29,9 @@ class Board{
 	public:
 	int boardsize = 11;
 	int numberOfRings[2];
+	int myIDboard,opponentIDboard;
+	
+	std::vector<Point> myringPosiotions,opponentringPosiotions;
 	// int mynumberOfRings;
 	// int opponentnumberOfRings;
 	//double 
@@ -50,6 +53,7 @@ class Board{
      */
 
 	Board( int boardsize);
+	void setID( int id1,int id2);
 
 	Board clone();
 
@@ -80,7 +84,7 @@ class Board{
      * to remove a ring from the board, and set the board accordingly.
      * 
      */
- 	void removeRing(int opponentID );
+ 	string removeRing(int opponentID );
 	
 	/**
      * to calculate the evaluation function.
