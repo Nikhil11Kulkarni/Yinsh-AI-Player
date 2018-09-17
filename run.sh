@@ -1,1 +1,1 @@
-python client.py 127.0.0.1 10000 run.sh -mode GUI
+./com
