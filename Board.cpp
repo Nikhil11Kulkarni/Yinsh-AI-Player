@@ -511,6 +511,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	int i=1;int flag =0;
 	while(py+i<=10 && (boardArray[px][py+i] == 2 || boardArray[px][py+i] == 3 ) && validBoardArray[px][py+i]==true){
 		i++;
+		if(boardArray[px][py+i]==-1 && validBoardArray[px][py+i]==true){break;flag=3;}
 		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) flag=1;
 	}
 
@@ -526,7 +527,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		    // cout<<"in while 0\n";
 		  }
 	}
-	else if(flag==0){      //if the position is after the markers.
+	else if(flag==3){      //if the position is after the markers.
 			Board p0 = this->clone(); 
 			p0.moveMyRing(ringcolor,px,py,px,py+i);
 			p0.setAction(px,py,px,py+i);
@@ -541,6 +542,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	i=1;flag =0;
 	while(py+i<=10 && px+i<=10 && (boardArray[px+i][py+i] == 2 || boardArray[px+i][py+i] == 3 ) && validBoardArray[px+i][py+i]==true){
 		i++;
+		if(boardArray[px+i][py+i]==-1 && validBoardArray[px+i][py+i]==true){break;flag=3;}
 		if(boardArray[px+i][py+i]==0||boardArray[px+i][py+i]==1) flag=1;
 	}
 	if(boardArray[px+1][py+1]==0||boardArray[px+1][py+1]==1)flag =1;
@@ -556,7 +558,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  }
 	}
 
-	else if(flag==0){ 
+	else if(flag==3){ 
 				Board p1 = this->clone(); 
 				p1.moveMyRing(ringcolor,px,py,px+i,py+i);
 				p1.setAction(px,py,px+i,py+i);
@@ -568,6 +570,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	i=1;flag =0;
 	while(px+i<=10 && (boardArray[px+i][py] == 2 || boardArray[px+i][py] == 3 )&& validBoardArray[px+i][py]==true){
 		i++;
+		if(boardArray[px+i][py]==-1 && validBoardArray[px+i][py]==true){break;flag=3;}
 		if(boardArray[px+i][py]==0||boardArray[px+i][py]==1) flag=1;
 	}
 	if(boardArray[px+1][py]==0||boardArray[px+1][py]==1)flag =1;
@@ -583,7 +586,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  }
 	}
 
-	else if(flag==0) {
+	else if(flag==3) {
 				Board p2 = this->clone(); 
 				p2.moveMyRing(ringcolor,px,py,px+i,py);
 			    p2.setAction(px,py,px+i,py);
@@ -595,6 +598,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	i=1;flag =0;
 	while(py-i<=0 && (boardArray[px][py-i] == 2 || boardArray[px][py-i] == 3 )&& validBoardArray[px][py-i]==true){
 		i++;
+		if(boardArray[px][py-i]==-1 && validBoardArray[px][py-i]==true){break;flag=3;}
 		if(boardArray[px][py-i]==0||boardArray[px][py-i]==1) flag=1;
 	}
 	if(boardArray[px][py-1]==0||boardArray[px][py-1]==1)flag =1;
@@ -610,7 +614,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  }
 	}
 
-	else if(flag==0){ 
+	else if(flag==3){ 
 		 		Board p3 = this->clone(); 
 		        p3.moveMyRing(ringcolor,px,py,px,py-i);
 				p3.setAction(px,py,px,py-i);
@@ -622,6 +626,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	i=1;flag =0;
 	while(py-i>=0 && px-i>=0 && (boardArray[px-i][py-i] == 2 || boardArray[px-i][py-i] == 3 )&& validBoardArray[px-i][py-i]==true){
 		i++;
+		if(boardArray[px-i][py-i]==-1 && validBoardArray[px-i][py-i]==true){break;flag=3;}
 		if(boardArray[px-i][py-i]==0||boardArray[px-i][py-i]==1) flag=1;
 	}
 	if(boardArray[px-1][py-1]==0||boardArray[px-1][py-1]==1)flag =1;
@@ -637,7 +642,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  }
 	}	
 
-	else if(flag==0) {
+	else if(flag==3) {
 				 Board p4 = this->clone(); 
 		         p4.moveMyRing(ringcolor,px,py,px-i,py-i);
 				 p4.setAction(px,py,px-i,py-i);
@@ -649,6 +654,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	i=1;flag =0;
 	while(px-i>=0 && (boardArray[px-i][py] == 2 || boardArray[px-i][py] == 3)&& validBoardArray[px-i][py]==true){
 		i++;
+		if(boardArray[px-i][py]==-1 && validBoardArray[px-i][py]==true){break;flag=3;}
 		if(boardArray[px-i][py]==0||boardArray[px-i][py]==1) flag=1;
 	}
 	if(boardArray[px-1][py]==0||boardArray[px-1][py]==1)flag =1;
@@ -664,7 +670,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 		  }
 	}	
 
-	else if(flag==0){ 
+	else if(flag==3){ 
 				Board p5 = this->clone(); 
 				p5.moveMyRing(ringcolor,px,py,px-i,py);
 				p5.setAction(px,py,px-i,py);
