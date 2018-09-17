@@ -128,7 +128,10 @@ while(readTokens < tokens.size()){
 int evaluation(Board board){
 	int myarr[6],opponentarr[6],weights[6];
 	int myCount=0,opponentCount=0;
-	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; weights[i]=i*2; }
+	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; 
+		if(i==5){weights[i]=i*4;} 
+		else{weights[i]=i*2;}
+	}
 	int currentTurn= myID;
 	for(int i = 0; i<11;i++){
 		for(int j= 0; j<11;j++){			
