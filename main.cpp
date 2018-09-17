@@ -368,7 +368,7 @@ string minimaxDecision(Board currentBoard){
 // cout<<"\n\nansboard:\n";
 // ansboard.printBoard();
 
-//cout<<"my--from_x:"<<ansboard.action[0]<<" from_y:"<<ansboard.action[1]<<" to_x:"<<ansboard.action[2]<<" to_y:"<<ansboard.action[3]<<endl;
+cerr<<"my--from_x:"<<ansboard.action[0]<<" from_y:"<<ansboard.action[1]<<" to_x:"<<ansboard.action[2]<<" to_y:"<<ansboard.action[3]<<endl;
 
 board=ansboard ; 
 Point p1,p2;
