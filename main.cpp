@@ -14,6 +14,7 @@ Board board;
 Board ansboard; 
 int myID,opponentID , depthLimiting;
 double timeAllowed;
+int initialStepsWithLessDepth=0;
 
 
 //GLOBAL FUNCTIONS
@@ -348,8 +349,8 @@ int maxValue(Board currentBoard , int depth){
 
 string minimaxDecision(Board currentBoard){
 	int depth=0;
-	if(timeAllowed < 10) depthLimiting=1;
-	if(timeAllowed > 10) depthLimiting=3;
+	if(timeAllowed < 10 || initialStepsWithLessDepth <= 4) depthLimiting=1;
+	else if(timeAllowed > 10) depthLimiting=3;
 	
 	string ans1="";
 		//cout<<"minimaxDecision:start"<<endl;
@@ -441,7 +442,8 @@ string mymove;
 	}
 	else{
 
-		
+initialStepsWithLessDepth++;
+
 		string strRemove1 = "",strRemove2 = "";
 		//cout<<"1 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
 		strRemove1= board.removeRing(myID);
