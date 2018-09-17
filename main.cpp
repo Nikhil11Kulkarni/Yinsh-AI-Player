@@ -422,7 +422,7 @@ while(true){
 	string opponentMove;
 	std::getline (std::cin,opponentMove);
 	double timestart= clock();
-	cout<<"opponentMove:"<<opponentMove<<endl;
+	//cout<<"opponentMove:"<<opponentMove<<endl;
 	std::clock_t start1;
 	double duration;
 	start1 = std::clock();
