@@ -129,7 +129,7 @@ int evaluation(Board board){
 	int myarr[6],opponentarr[6],weights[6];
 	int myCount=0,opponentCount=0;
 	for(int i=0;i<6;i++){ myarr[i]=0; opponentarr[i]=0; 
-		if(i==5){weights[i]=i*4;} 
+		if(i==5){weights[i]=100;} 
 		else{weights[i]=i*2;}
 	}
 	int currentTurn= myID;
@@ -344,8 +344,10 @@ int maxValue(Board currentBoard , int depth){
 		// cout<<"\n\ncurrentNeighbours[i]:\n"<<endl;
 		// currentNeighbours[i].printBoard();
 		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
-		v= max(v,  minofneighbour);
+		if(v < minofneighbour)v=minofneighbour;
+		//v= max(v,  minofneighbour);
 	}
+//cerr<<"\n\nselected-eval:"<<v<<endl;
 	return v;
 
 }
@@ -358,15 +360,9 @@ string minimaxDecision(Board currentBoard){
 	string ans1="";
 		//cout<<"minimaxDecision:start"<<endl;
 	int v=maxValue(currentBoard, depth);
-// 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 // 	cout<<"minimaxDecision:got v:size"<<currentNeighbours.size()<<endl;
-// 	for(int i=0;i<currentNeighbours.size();i++){
-// 		cout<<i<<":11minimaxDecision:got v:"<<v<<endl;
-// 		if(evaluation(currentNeighbours[i])==v){
-// 		cout<<"yippie"<<endl; 
-// 		}
-// 		//return action string here.
-// 	}
+		//return action string here.
+	//}
 //	return ans1;
 // cout<<"\n\nansboard:\n";
 // ansboard.printBoard();
@@ -426,56 +422,52 @@ while(true){
 	string opponentMove;
 	std::getline (std::cin,opponentMove);
 	double timestart= clock();
-	//cout<<"opponentMove:"<<opponentMove<<endl;
+
 	std::clock_t start1;
 	double duration;
 	start1 = std::clock();
 
 	updateBoardOpponentMove( opponentID , opponentMove);
-	//board.printBoard();
 
-if(board.numberOfRings[myID]==5){placingDone=true;}//cout<<"placingDone."<<endl;
+if(board.numberOfRings[myID]==5){placingDone=true;} //cout<<"placingDone."<<endl;
 string mymove="";
 
 	if(placingDone==false){
-		// cout<<"myring:"<<board.numberOfRings[myID]<<endl;
-		// cout<<"opponentring:"<<board.numberOfRings[opponentID]<<endl;
+
 		mymove= setInitialRing(); //function sets the board and gives the initial move.
 		cout<<mymove<<endl;
 	}
 	else{
-
-initialStepsWithLessDepth++;
-
-		string strRemove1 = "",strRemove2 = "";
-								//cout<<"1 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
+		initialStepsWithLessDepth++;
+		string strRemove1 = "", strRemove2 = "";
 		strRemove1= board.removeRing(myID);
 
-	if(board.numberOfRings[myID]<=2){
-		mymove = strRemove1 +" "+ mymove;
-		cout<<mymove<<endl;	
-	}
-	else {
-		//cout<<"2 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;		
-		mymove = minimaxDecision(board);
-		//cout<<"-- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
-		strRemove2= board.removeRing(myID);
-		
-	if(strRemove1!=""){mymove = strRemove1 +" "+ mymove;}
-	if(strRemove2!=""){	mymove=mymove+" " +strRemove2 ;}
-		cout<<mymove<<endl;	
-	}	
+		if(board.numberOfRings[myID]<=2){
+			//mymove = strRemove1 +" "+ mymove;
+			cout<<strRemove1<<"\n";	
+		}
+		else{
+			mymove = minimaxDecision(board);
+			strRemove2= board.removeRing(myID);
+			
+		if(strRemove1!=""){mymove = strRemove1 +" "+ mymove;}
+		if(strRemove2!=""){mymove = mymove+" " +strRemove2 ;}
+
+			if(board.numberOfRings[myID]<=2) { cout<<mymove<<"\n";	cerr<<"with /n"<<endl;} //AS GAME ENDS --- NO EXTRA PRINT
+			else{cout<<mymove<<"\n";}//	cerr<<"GAME OVER BRODAAA---please do it: no:"<<board.numberOfRings[myID]<<endl;
+		}	
 
 	}
-	
+	bool gameendDone=false;
 if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
 	int winner,unlucky;
-	//cout<<"b6"<<endl;	
+	cerr<<"GAME OVER BRODAAA"<<endl;
+	gameendDone=true;	
 	if(board.numberOfRings[myID]<=2){ winner=myID; unlucky=opponentID;}
 	else{ winner=opponentID; unlucky=myID;} 
+//while(true){	cerr<<"GAME OVER BROS: WIN:"<<winner<<" and LOSS:"<<unlucky<<endl;}
 
-	//cout<<"GAME OVER BROS: WIN:"<<winner<<" and LOSS:"<<unlucky<<endl;
-	break;
+	//break;
 }
 
 
@@ -487,6 +479,7 @@ timeAllowed=timeAllowed - timeelapsed;
 	std::clock_t end1;
 	end1 = std::clock();
 	totaltime += end1 - start1;
+if(gameendDone==true)break;
 
 }
 
@@ -509,5 +502,11 @@ timeAllowed=timeAllowed - timeelapsed;
 // cout<<"b4"<<endl;
 //cout<<"b5"<<endl;
 
-
+//cout<<"opponentMove:"<<opponentMove<<endl;
+//board.printBoard();
+// cout<<"myring:"<<board.numberOfRings[myID]<<endl;
+// cout<<"opponentring:"<<board.numberOfRings[opponentID]<<endl;
+		//cout<<"1 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
+		//cout<<"2 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;	
+		//cout<<"-- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
 

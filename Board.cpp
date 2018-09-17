@@ -495,6 +495,12 @@ void Board::setAction(int from_x,int from_y, int to_x,int to_y){
 
 
 vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
+	// for(int w1=0;w1<11;w1++){
+	// 	for(int w2=0;w2<11;w2++){
+	// 		cerr<<validBoardArray[w1][w2]<<" ";
+	// 	}
+	// 	cerr<<"\n";
+	// }
 	// cout<<"in neighbours1"<<endl;
 	vector <Board> neighbours;
 // in direction 0
@@ -902,10 +908,11 @@ return neighbours;
 string Board::removeRing(int opponentID ){
 	string removedMarkersRings ="";
 	int ringcolor = opponentID;
+	bool gameEnded=false;
 
 	int mcolor = ringcolor+2;
-	for(int j = 0; j<11;j++){
-		for(int i= 0; i<=6;i++ ){
+	for(int j = 0; j<11 && gameEnded==false;j++){
+		for(int i= 0; i<=6 && gameEnded==false;i++ ){
 			if(boardArray[j][i] == mcolor && boardArray[j][i+1] == mcolor && boardArray[j][i+2] == mcolor && boardArray[j][i+3] == mcolor  
 				&& boardArray[j][i+4] == mcolor){
 				// do something-- make all pos of markers empty and valid-true; remove one ring and update things in the board-- RS 1 2 RE 4 16 X 3 4
@@ -928,13 +935,14 @@ validArray[ringXpos1][ringXpos2]=true;
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
+if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 
 			}
 		}
 	}
 
-	for(int j = 0; j<11;j++){
-		for(int i= 0; i<=6;i++ ){
+	for(int j = 0; j<11 && gameEnded==false;j++){
+		for(int i= 0; i<=6 && gameEnded==false;i++ ){
 			if(boardArray[i][j] == mcolor && boardArray[i+1][j] == mcolor && boardArray[i+2][j] == mcolor && boardArray[i+3][j] == mcolor  
 				&& boardArray[i+4][j] == mcolor){
 				// do something.
@@ -956,14 +964,14 @@ validArray[ringXpos1][ringXpos2]=true;
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
-
+if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 			
 			}
 		}
 	}
 
-	for(int k = 4; k>=1;k--){
-		for (int i = 0; i<7-k ;i++){
+	for(int k = 4; k>=1 && gameEnded==false;k--){
+		for (int i = 0; i<7-k && gameEnded==false;i++){
 			if(boardArray[k+i][i] == mcolor && boardArray[k+i+1][i+1] == mcolor && boardArray[k+i+2][i+2] == mcolor && boardArray[k+i+3][i+3] == mcolor  
 				&& boardArray[k+i+4][i+4] == mcolor){
 				// do something.
@@ -985,14 +993,14 @@ validArray[ringXpos1][ringXpos2]=true;
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
-
+if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 			}
 		}  
 	}	
 
 
 	// for line going to up-right in the middle. has to be written
-	for (int i=1;i<=5;i++){
+	for (int i=1;i<=5 && gameEnded==false;i++){
 		if(boardArray[i][i] == mcolor && boardArray[i+1][i+1] == mcolor && boardArray[i+2][i+2] == mcolor && boardArray[i+3][i+3] == mcolor  
 				&& boardArray[i+4][i+4] == mcolor){
 				// do something.
@@ -1014,14 +1022,14 @@ validArray[ringXpos1][ringXpos2]=true;
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
-
+if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 			}
 	}
 
 
 
-	for(int k = 4; k>=1;k--){
-		for (int i = 0; i<7-k ;i++){
+	for(int k = 4; k>=1 && gameEnded==false;k--){
+		for (int i = 0; i<7-k && gameEnded==false ;i++){
 			if(boardArray[i][k+i] == mcolor && boardArray[i+1][k+i+1] == mcolor && boardArray[i+2][k+i+2] == mcolor && boardArray[i+3][k+i+3] == mcolor  
 				&& boardArray[i+4][k+i+4] == mcolor){
 				// do something.
@@ -1043,11 +1051,13 @@ validArray[ringXpos1][ringXpos2]=true;
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
-
+if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 			
 			}
 		}  
 	}
+
+	if(gameEnded==true){cerr<<"GAME ENDED IN remove"<<endl;}
 
 return removedMarkersRings;
 }
@@ -1078,7 +1088,7 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 	if(from_x == to_x){
 		int miy = from_y,mxy  = to_y;
 		if(from_y>to_y){miy = to_y; mxy = from_y;}  
-		for(int i = miy+1; i< mxy ;i++){
+		for(int i = miy; i<= mxy ;i++){
 			if (boardArray[from_x][i] != -1 ) {boardArray[from_x][i] = -1; validArray[from_x][i]= true;}// CHECK THIS IF CONDITION
 		}
 	}
@@ -1086,7 +1096,7 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 	else if(from_y == to_y){
 		int mix = from_x,mxx  = to_x;
 		if(from_x>to_x){mix = to_x; mxx = from_x;}  
-		for(int i = mix+1; i< mxx ;i++){
+		for(int i = mix; i<= mxx ;i++){
 			if (boardArray[i][from_y] != -1 ) {boardArray[i][from_y] = -1;boardArray[i][from_y]=true;} 
 		}
 	}
@@ -1094,14 +1104,14 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 	else{
 		if(from_x < to_x){
 		int s = to_x - from_x ;
-		for(int i = 1; i< s ;i++){
+		for(int i = 0; i<= s ;i++){
 			if (boardArray[from_x+i][from_y+i] != -1 ) {boardArray[from_x+i][from_y+i] = -1; boardArray[from_x+i][from_y+i] = true;} 
 		}
 		}
 
 		else{
 		int s =from_x -  to_x ;
-		for(int i = 1; i< s ;i++){
+		for(int i = 0; i<= s ;i++){
 			if (boardArray[from_x-i][from_y-i] != -1 ) {boardArray[from_x-i][from_y-i] = -1; boardArray[from_x-i][from_y-i] = true;} 
 		}
 		}
