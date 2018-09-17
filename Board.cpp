@@ -931,6 +931,7 @@ string Board::removeRing(int opponentID ){
 			pstart.set(j, i); pend.set(j ,i+4); ringX.set(ringXpos1, ringXpos2); 
 boardArray[ringXpos1][ringXpos2]=-1;
 validArray[ringXpos1][ringXpos2]=true;
+if(removedMarkersRings!=""){removedMarkersRings=removedMarkersRings+" ";}
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
@@ -960,6 +961,7 @@ if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 			pstart.set( i,j); pend.set(i+4 ,j); ringX.set(ringXpos1, ringXpos2); 
 boardArray[ringXpos1][ringXpos2]=-1;
 validArray[ringXpos1][ringXpos2]=true;
+if(removedMarkersRings!=""){removedMarkersRings=removedMarkersRings+" ";}
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
@@ -990,6 +992,8 @@ if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 boardArray[ringXpos1][ringXpos2]=-1;
 validArray[ringXpos1][ringXpos2]=true;
 
+if(removedMarkersRings!=""){removedMarkersRings=removedMarkersRings+" ";}
+
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
@@ -1019,6 +1023,8 @@ if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 boardArray[ringXpos1][ringXpos2]=-1;
 validArray[ringXpos1][ringXpos2]=true;
 
+if(removedMarkersRings!=""){removedMarkersRings=removedMarkersRings+" ";}
+
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
 			removedMarkersRings = removedMarkersRings + "X "+ringX.getHexagonPositionString();
@@ -1047,6 +1053,8 @@ if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 			pstart.set(i, k+i); pend.set(i+4 ,k+i+4); ringX.set(ringXpos1, ringXpos2); 
 boardArray[ringXpos1][ringXpos2]=-1;
 validArray[ringXpos1][ringXpos2]=true;
+
+if(removedMarkersRings!=""){removedMarkersRings=removedMarkersRings+" ";}
 
 			removedMarkersRings = removedMarkersRings + "RS "+ pstart.getHexagonPositionString()+" " ;
 			removedMarkersRings = removedMarkersRings + "RE " + pend.getHexagonPositionString()+" ";
