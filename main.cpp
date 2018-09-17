@@ -435,7 +435,7 @@ while(true){
 	//board.printBoard();
 
 if(board.numberOfRings[myID]==5){placingDone=true;}//cout<<"placingDone."<<endl;
-string mymove;
+string mymove="";
 
 	if(placingDone==false){
 		// cout<<"myring:"<<board.numberOfRings[myID]<<endl;
@@ -448,8 +448,14 @@ string mymove;
 initialStepsWithLessDepth++;
 
 		string strRemove1 = "",strRemove2 = "";
-		//cout<<"1 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
+								//cout<<"1 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
 		strRemove1= board.removeRing(myID);
+
+	if(board.numberOfRings[myID]<=2){
+		mymove = strRemove1 +" "+ mymove;
+		cout<<mymove<<endl;	
+	}
+	else {
 		//cout<<"2 -- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;		
 		mymove = minimaxDecision(board);
 		//cout<<"-- myring:"<<board.numberOfRings[myID]<<" opponentring:"<<board.numberOfRings[opponentID]<<endl;
@@ -457,8 +463,9 @@ initialStepsWithLessDepth++;
 		
 	if(strRemove1!=""){mymove = strRemove1 +" "+ mymove;}
 	if(strRemove2!=""){	mymove=mymove+" " +strRemove2 ;}
-
 		cout<<mymove<<endl;	
+	}	
+
 	}
 	
 if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
