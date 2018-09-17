@@ -494,6 +494,214 @@ void Board::setAction(int from_x,int from_y, int to_x,int to_y){
 }
 
 
+vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
+	// cout<<"in neighbours1"<<endl;
+	vector <Board> neighbours;
+// in direction 0
+	bool dir0=true;
+	int flag =0;int i=1;
+	while(py+i<=10 && validBoardArray[px][py+i]==true && dir0==true ){
+		// cout<<"in direction 0 "<<endl;
+		if(flag==0){
+			if(boardArray[px][py+i]==-1 && validBoardArray[px][py+i]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px,py+i);
+			    b.setAction(px,py,px,py+i);
+			    neighbours.push_back(b);
+				i++;
+			}
+			else if(validBoardArray[px][py+i]==false){dir0=false ;break;}//invalid
+			else if((boardArray[px][py+i]==0 || boardArray[px][py+i]==1)&&validBoardArray[px][py+i]==true){dir0=false;break;}//rings
+			else if((boardArray[px][py+i]==2 || boardArray[px][py+i]==3)&& validBoardArray[px][py+i]==true){flag=1; i++;}//markers
+		}
+		else if(flag==1){
+			if(boardArray[px][py+i]==-1 && validBoardArray[px][py+i]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px,py+i);
+			    b.setAction(px,py,px,py+i);
+			    neighbours.push_back(b);			
+			    dir0=false ;
+				break;
+			}
+			else if(validBoardArray[px][py+i]==false){dir0=false ;break;}//invalid
+			else if((boardArray[px][py+i]==0 || boardArray[px][py+i]==1)&&validBoardArray[px][py+i]==true){dir0=false ;break;}//rings
+			else if((boardArray[px][py+i]==2 || boardArray[px][py+i]==3)&& validBoardArray[px][py+i]==true){flag=1; i++;}//markers
+		}
+
+	}
+// in direction 1
+	flag =0; i=1;
+	bool dir1=true;
+	while(px+i<=10 && py+i<=10 && validBoardArray[px+i][py+i]==true && dir1==true){
+		// cout<<"in direction 1 "<<endl;
+		if(flag==0){
+			if(boardArray[px+i][py+i]==-1 && validBoardArray[px+i][py+i]==true){//space
+				// cout<<"in IF -1 FLAG 0 i:"<<i<<" px+i:"<<px+i<<" py+i:"<<py+i<<endl;
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px+i,py+i);
+			    b.setAction(px,py,px+i,py+i);
+			    neighbours.push_back(b);
+				i++;
+			}
+			else if(validBoardArray[px+i][py+i]==false){dir1=false ; break;}//invalid
+			else if((boardArray[px+i][py+i]==0 || boardArray[px+i][py+i]==1)&&validBoardArray[px+i][py+i]==true){dir1=false ;break;}//rings
+			else if((boardArray[px+i][py+i]==2 || boardArray[px+i][py+i]==3)&& validBoardArray[px+i][py+i]==true){flag=1; i++;}//markers
+		}
+		else if(flag==1){
+			if(boardArray[px+i][py+i]==-1 && validBoardArray[px+i][py+i]==true){//space
+				cout<<"in IF -1 FLAG 1 "<<endl;
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px+i,py+i);
+			    b.setAction(px,py,px+i,py+i);
+			    neighbours.push_back(b);			
+				dir1=false ;break;
+			}
+			else if(validBoardArray[px+i][py+i]==false){cout<<"in IF VALID FLAG 1 "<<endl;dir1=false ;break;}//invalid
+			else if((boardArray[px+i][py+i]==0 || boardArray[px+i][py+i]==1)&&validBoardArray[px+i][py+i]==true){dir1=false ;break;}//rings
+			else if((boardArray[px+i][py+i]==2 || boardArray[px+i][py+i]==3)&& validBoardArray[px+i][py+i]==true){flag=1; i++;}//markers
+		}
+
+	}
+// in dirrection 2
+	bool dir2=true;
+	flag =0;i=1;
+	while(px+i<=10 && validBoardArray[px+i][py]==true && dir2==true){
+		// cout<<"in direction 2 "<<endl;
+		if(flag==0){
+			if(boardArray[px+i][py]==-1 && validBoardArray[px+i][py]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px+i,py);
+			    b.setAction(px,py,px+i,py);
+			    neighbours.push_back(b);
+				i++;
+			}
+			else if(validBoardArray[px+i][py]==false){dir2=false;break;}//invalid
+			else if((boardArray[px+i][py]==0 || boardArray[px+i][py]==1)&&validBoardArray[px+i][py]==true){dir2=false;break;}//rings
+			else if((boardArray[px+i][py]==2 || boardArray[px+i][py]==3)&&validBoardArray[px+i][py]==true){flag=1; i++;}//markers
+		}
+		else if(flag==1){
+			if(boardArray[px+i][py]==-1 && validBoardArray[px+i][py]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px+i,py);
+			    b.setAction(px,py,px+i,py);
+			    neighbours.push_back(b);	
+			    dir2=false;		
+				break;
+			}
+			else if(validBoardArray[px+i][py]==false){dir2=false;break;}//invalid
+			else if((boardArray[px+i][py]==0 || boardArray[px+i][py]==1)&&validBoardArray[px+i][py]==true){dir2=false;break;}//rings
+			else if((boardArray[px+i][py]==2 || boardArray[px+i][py]==3)&&validBoardArray[px+i][py]==true){flag=1; i++;}//markers
+		}
+
+	}
+// in direction 3
+	flag =0; i=1;
+	bool dir3=true;
+	while(py-i>=0 && validBoardArray[px][py-i]==true && dir3==true){
+		// cout<<"in direction 3 "<<endl;
+		if(flag==0){
+			if(boardArray[px][py-i]==-1 && validBoardArray[px][py-i]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px,py-i);
+			    b.setAction(px,py,px,py-i);
+			    neighbours.push_back(b);
+				i++;
+			}
+			else if(validBoardArray[px][py-i]==false){dir3=false;break;}//invalid
+			else if((boardArray[px][py-i]==0 || boardArray[px][py-i]==1)&&validBoardArray[px][py-i]==true){dir3=false;break;}//rings
+			else if((boardArray[px][py-i]==2 || boardArray[px][py-i]==3)&&validBoardArray[px][py-i]==true){flag=1; i++;}//markers
+		}
+		else if(flag==1){
+			if(boardArray[px][py-i]==-1 && validBoardArray[px][py-i]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px,py-i);
+			    b.setAction(px,py,px,py-i);
+			    neighbours.push_back(b);			
+			    dir3=false;
+				break;
+			}
+			else if(validBoardArray[px][py-i]==false){dir3=false;break;}//invalid
+			else if((boardArray[px][py-i]==0 || boardArray[px][py-i]==1)&&validBoardArray[px][py-i]==true){dir3=false;break;}//rings
+			else if((boardArray[px][py-i]==2 || boardArray[px][py-i]==3)&&validBoardArray[px][py-i]==true){flag=1; i++;}//markers
+		}
+
+	}
+// in direction 4
+	bool dir4=true;
+	flag =0;i=1;
+	while(px-i>=0 && py-i>=0 && validBoardArray[px-i][py-i]==true && dir4==true){
+		// cout<<"in direction 4 "<<endl;
+		if(flag==0){
+			if(boardArray[px-i][py-i]==-1 && validBoardArray[px-i][py-i]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px-i,py-i);
+			    b.setAction(px,py,px-i,py-i);
+			    neighbours.push_back(b);
+				i++;
+			}
+			else if(validBoardArray[px-i][py-i]==false){dir4=false;break;}//invalid
+			else if((boardArray[px-i][py-i]==0 || boardArray[px-i][py-i]==1)&&validBoardArray[px-i][py-i]==true){dir4=false;break;}//rings
+			else if((boardArray[px-i][py-i]==2 || boardArray[px-i][py-i]==3)&&validBoardArray[px-i][py-i]==true){flag=1; i++;}//markers
+		}
+		else if(flag==1){
+			if(boardArray[px-i][py-i]==-1 && validBoardArray[px-i][py-i]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px-i,py-i);
+			    b.setAction(px,py,px-i,py-i);
+			    neighbours.push_back(b);			
+			    dir4=false;
+				break;
+			}
+			else if(validBoardArray[px-i][py-i]==false){dir4=false;break;}//invalid
+			else if((boardArray[px-i][py-i]==0 || boardArray[px-i][py-i]==1)&&validBoardArray[px-i][py-i]==true){dir4=false;break;}//rings
+			else if((boardArray[px-i][py-i]==2 || boardArray[px-i][py-i]==3)&&validBoardArray[px-i][py-i]==true){flag=1; i++;}//markers
+		}
+
+	}
+// in direction 5
+	bool dir5=true;
+	flag =0;i=1;
+	while(px-i>=0 && validBoardArray[px-i][py]==true && dir5==true){
+		// cout<<"in direction 5 "<<endl;
+		if(flag==0){
+			if(boardArray[px-i][py]==-1 && validBoardArray[px-i][py]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px-i,py);
+			    b.setAction(px,py,px-i,py);
+			    neighbours.push_back(b);
+				i++;
+			}
+			else if(validBoardArray[px-i][py]==false){dir5=false;break;}//invalid
+			else if((boardArray[px-i][py]==0 || boardArray[px-i][py]==1)&&validBoardArray[px-i][py]==true){dir5=false;break;}//rings
+			else if((boardArray[px-i][py]==2 || boardArray[px-i][py]==3)&&validBoardArray[px-i][py]==true){flag=1; i++;}//markers
+		}
+		else if(flag==1){
+			if(boardArray[px-i][py]==-1 && validBoardArray[px-i][py]==true){//space
+				Board b = this->clone();
+			  	b.moveMyRing(ringcolor,px,py,px-i,py);
+			    b.setAction(px,py,px-i,py);
+			    neighbours.push_back(b);			
+			    dir5=false;
+				break;
+			}
+			else if(validBoardArray[px-i][py]==false){dir5=false;break;}//invalid
+			else if((boardArray[px-i][py]==0 || boardArray[px-i][py]==1)&&validBoardArray[px-i][py]==true){dir5=false;break;}//rings
+			else if((boardArray[px-i][py]==2 || boardArray[px-i][py]==3)&&validBoardArray[px-i][py]==true){flag=1; i++;}//markers
+		}
+
+	} 
+
+	return neighbours;
+
+
+}
+
+
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------------
+
 vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	// HAVE TO ADD THE CASE IN WHICH THERE IS -1 IN A DIRECTION SO ALL THE -1 IN THAT LINE
 	// CORRESPOND TO NEIGHBOURS. 
@@ -512,7 +720,7 @@ vector<Board> Board::getNeighbours(int px,int py, int ringcolor){
 	while(py+i<=10 && (boardArray[px][py+i] == 2 || boardArray[px][py+i] == 3 ) && validBoardArray[px][py+i]==true){
 		i++;
 		if(boardArray[px][py+i]==-1 && validBoardArray[px][py+i]==true){break;flag=3;}
-		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) flag=1;
+		if(boardArray[px][py+i]==0||boardArray[px][py+i]==1) {break;flag=1;}
 	}
 
 	if(boardArray[px][py+1]==0||boardArray[px][py+1]==1)flag =1;
@@ -899,7 +1107,7 @@ vector<Board> Board::getSuccessors(int ringcolor){
 		for(int j =0;j<=10;j++){
 			if(boardArray[i][j] == ringcolor){
 				//cout<<"looking for neighbours of "<<i<<","<<j<<endl;
-				vector<Board> n = this->getNeighbours(i,j,ringcolor);
+				vector<Board> n = this->getNeighbours1(i,j,ringcolor);
 				succ.insert(succ.end(),n.begin(),n.end());
 			}
 		}

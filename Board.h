@@ -102,6 +102,8 @@ class Board{
 
 	vector<Board> getNeighbours(int px,int py, int ringcolor);
 
+	vector<Board> getNeighbours1(int px,int py, int ringcolor);
+
 	vector<Board> getSuccessors(int ringcolor);
 
 	void removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x ,int  to_y ,int ring_removeX ,int ring_removeY);
