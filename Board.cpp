@@ -104,7 +104,7 @@ Point hex_from_twod (Point p){
 	int py = p.gety();
 	int h;
 	if(px<=5 && py>=5)h=py-px;
-	else if(py<=5&&py>=5) h=px-py;
+	else if(py<=5&&px>=5) h=px-py;
 	else h = max(abs(px-5),abs(py-5));   
 	int c;
 
@@ -461,7 +461,7 @@ Point Board::hex_from_twod (Point p){
 	int py = p.gety();
 	int h;
 	if(px<=5 && py>=5)h=py-px;
-	else if(py<=5&&py>=5) h=px-py;
+	else if(py<=5&&px>=5) h=px-py;
 	else h = max(abs(px-5),abs(py-5));   
 	int c;
 
@@ -549,14 +549,14 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 		}
 		else if(flag==1){
 			if(boardArray[px+i][py+i]==-1 && validBoardArray[px+i][py+i]==true){//space
-				cout<<"in IF -1 FLAG 1 "<<endl;
+				// cout<<"in IF -1 FLAG 1 "<<endl;
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px+i,py+i);
 			    b.setAction(px,py,px+i,py+i);
 			    neighbours.push_back(b);			
 				dir1=false ;break;
 			}
-			else if(validBoardArray[px+i][py+i]==false){cout<<"in IF VALID FLAG 1 "<<endl;dir1=false ;break;}//invalid
+			else if(validBoardArray[px+i][py+i]==false){dir1=false ;break;}//invalid
 			else if((boardArray[px+i][py+i]==0 || boardArray[px+i][py+i]==1)&&validBoardArray[px+i][py+i]==true){dir1=false ;break;}//rings
 			else if((boardArray[px+i][py+i]==2 || boardArray[px+i][py+i]==3)&& validBoardArray[px+i][py+i]==true){flag=1; i++;}//markers
 		}
@@ -1099,7 +1099,7 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 
 
 
-// do something like storing a board and evaluationg the racursing on actions in minimax. 
+// do something like storing a board and evaluationg the recursing on actions in minimax. 
 vector<Board> Board::getSuccessors(int ringcolor){
 	vector<Board> succ;
 	// ringcolor == 
