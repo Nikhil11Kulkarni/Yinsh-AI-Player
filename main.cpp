@@ -313,7 +313,8 @@ myCount=0; opponentCount=0;
 	}
 
 int sumEvaluation=0;
-	for(int i=0;i<6;i++){ sumEvaluation=sumEvaluation + weights[i]*(myarr[i]- opponentarr[i]) ; } // 
+	for(int i=0;i<6;i++){ sumEvaluation=sumEvaluation + weights[i]*(myarr[i]- opponentarr[i]) ; } 
+	sumEvaluation = sumEvaluation + (board.numberOfRings[board.opponentIDboard] - board.numberOfRings[board.myIDboard])*1000; 
 return sumEvaluation;
 }
 
@@ -466,7 +467,7 @@ Point p1,p2;
 		ans=ans+"S ";
 		ans=ans+ to_string(from_x)+" "+to_string(from_y)+" ";//"S x y "
 		ans=ans+"M " + to_string(to_x)+" "+to_string(to_y);//"S x y M x y";
-		
+			if(ansboard.actionRemoveString != ""){ans=ans+" "+ansboard.actionRemoveString ;}	
 		return ans;
 
 }

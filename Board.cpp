@@ -512,6 +512,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px][py+i]==-1 && validBoardArray[px][py+i]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px,py+i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px,py+i);
 			    neighbours.push_back(b);
 				i++;
@@ -524,6 +528,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px][py+i]==-1 && validBoardArray[px][py+i]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px,py+i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px,py+i);
 			    neighbours.push_back(b);			
 			    dir0=false ;
@@ -545,6 +553,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 				// cout<<"in IF -1 FLAG 0 i:"<<i<<" px+i:"<<px+i<<" py+i:"<<py+i<<endl;
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px+i,py+i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px+i,py+i);
 			    neighbours.push_back(b);
 				i++;
@@ -558,6 +570,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px+i,py+i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px+i,py+i);
 			    neighbours.push_back(b);			
 				dir1=false ;break;
@@ -578,6 +594,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px+i][py]==-1 && validBoardArray[px+i][py]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px+i,py);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px+i,py);
 			    neighbours.push_back(b);
 				i++;
@@ -590,6 +610,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px+i][py]==-1 && validBoardArray[px+i][py]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px+i,py);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px+i,py);
 			    neighbours.push_back(b);	
 			    dir2=false;		
@@ -610,6 +634,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px][py-i]==-1 && validBoardArray[px][py-i]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px,py-i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px,py-i);
 			    neighbours.push_back(b);
 				i++;
@@ -622,6 +650,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px][py-i]==-1 && validBoardArray[px][py-i]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px,py-i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px,py-i);
 			    neighbours.push_back(b);			
 			    dir3=false;
@@ -642,6 +674,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px-i][py-i]==-1 && validBoardArray[px-i][py-i]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px-i,py-i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px-i,py-i);
 			    neighbours.push_back(b);
 				i++;
@@ -654,6 +690,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px-i][py-i]==-1 && validBoardArray[px-i][py-i]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px-i,py-i);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px-i,py-i);
 			    neighbours.push_back(b);			
 			    dir4=false;
@@ -674,6 +714,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px-i][py]==-1 && validBoardArray[px-i][py]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px-i,py);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px-i,py);
 			    neighbours.push_back(b);
 				i++;
@@ -686,6 +730,10 @@ vector<Board> Board::getNeighbours1(int px,int py, int ringcolor){
 			if(boardArray[px-i][py]==-1 && validBoardArray[px-i][py]==true){//space
 				Board b = this->clone();
 			  	b.moveMyRing(ringcolor,px,py,px-i,py);
+			  	string removaltry = "";
+			  	removaltry= b.removeRing(ringcolor);
+			  	if(removaltry!=""){b.actionRemoveString = removaltry ; }
+
 			    b.setAction(px,py,px-i,py);
 			    neighbours.push_back(b);			
 			    dir5=false;
@@ -1065,7 +1113,7 @@ if(numberOfRings[opponentID] <= 2){gameEnded=true;}
 		}  
 	}
 
-	if(gameEnded==true){cerr<<"GAME ENDED IN remove"<<endl;}
+	//if(gameEnded==true){cerr<<"GAME ENDED IN remove"<<endl;}
 
 return removedMarkersRings;
 }

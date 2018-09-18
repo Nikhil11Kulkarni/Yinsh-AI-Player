@@ -40,6 +40,8 @@ class Board{
 	int boardArray [11] [11];
     bool validArray [11] [11];
     bool validBoardArray [11] [11];
+    //std::vector<Point> removedringNeighbour;
+	string actionRemoveString;
 
 	int action[4];
     
