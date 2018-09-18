@@ -1105,7 +1105,7 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 		int mix = from_x,mxx  = to_x;
 		if(from_x>to_x){mix = to_x; mxx = from_x;}  
 		for(int i = mix; i<= mxx ;i++){
-			if (boardArray[i][from_y] != -1 ) {boardArray[i][from_y] = -1;boardArray[i][from_y]=true;} 
+			if (boardArray[i][from_y] != -1 ) {boardArray[i][from_y] = -1;validArray[i][from_y]=true;} 
 		}
 	}
 
@@ -1113,14 +1113,14 @@ void Board::removeRingOpponent(int opponentID ,int from_x ,int from_y , int to_x
 		if(from_x < to_x){
 		int s = to_x - from_x ;
 		for(int i = 0; i<= s ;i++){
-			if (boardArray[from_x+i][from_y+i] != -1 ) {boardArray[from_x+i][from_y+i] = -1; boardArray[from_x+i][from_y+i] = true;} 
+			if (boardArray[from_x+i][from_y+i] != -1 ) {boardArray[from_x+i][from_y+i] = -1; validArray[from_x+i][from_y+i] = true;} 
 		}
 		}
 
 		else{
 		int s =from_x -  to_x ;
 		for(int i = 0; i<= s ;i++){
-			if (boardArray[from_x-i][from_y-i] != -1 ) {boardArray[from_x-i][from_y-i] = -1; boardArray[from_x-i][from_y-i] = true;} 
+			if (boardArray[from_x-i][from_y-i] != -1 ) {boardArray[from_x-i][from_y-i] = -1; validArray[from_x-i][from_y-i] = true;} 
 		}
 		}
 	}

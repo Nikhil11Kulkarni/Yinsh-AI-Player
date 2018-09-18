@@ -414,7 +414,7 @@ int maxValue(Board currentBoard , int depth, int alpha, int beta){
 		if(alpha>=beta) return minofneighbour;
 		if(depth==1){
 			bool t = checkfive(currentNeighbours[i]);
-			cerr<<"five truth is"<<t<<endl;
+			//cerr<<"five truth is"<<t<<endl;
 			if(t){ansboard = currentNeighbours[i];return minValue(currentNeighbours[i],depth,alpha,beta);}
 		}
 		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
@@ -428,8 +428,8 @@ string minimaxDecision(Board currentBoard){
 	int alpha =  std::numeric_limits<int>::min();
 	int beta = std::numeric_limits<int>::max();
 	int depth=0;
-	if(timeAllowed < 10 || initialStepsWithLessDepth <= 4) depthLimiting=1;
-	else if(timeAllowed > 10) depthLimiting=3;
+	if(timeAllowed < 10 || initialStepsWithLessDepth <= 3) depthLimiting=1;
+	else if(timeAllowed > 10) depthLimiting=4;
 	
 	string ans1="";
 		//cout<<"minimaxDecision:start"<<endl;
@@ -534,11 +534,11 @@ string mymove="";
 		}	
 
 	}
-//	bool gameendDone=false;
+	bool gameendDone=false;
 if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
 	int winner,unlucky;
 	cerr<<"GAME OVER BRODAAA"<<endl;
-//	gameendDone=true;	
+	gameendDone=true;	
 	if(board.numberOfRings[myID]<=2){ winner=myID; unlucky=opponentID;}
 	else{ winner=opponentID; unlucky=myID;} 
 //while(true){	cerr<<"GAME OVER BROS: WIN:"<<winner<<" and LOSS:"<<unlucky<<endl;}
