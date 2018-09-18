@@ -337,18 +337,14 @@ int minValue(Board currentBoard, int depth,int alpha, int beta){
 }
 
 int maxValue(Board currentBoard , int depth, int alpha, int beta){
-		//cout<<"maxValue:start"<<endl;
+
 	if(depth==depthLimiting){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
-	// cout<<"\n\ncurrentBoard:\n"<<endl;
-	// currentBoard.printBoard();
 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 	int v=std::numeric_limits<int>::min();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
 		int minofneighbour= minValue(currentNeighbours[i],depth,alpha,beta);
 		alpha = max(alpha,minofneighbour);
-		// cout<<"\n\ncurrentNeighbours[i]:\n"<<endl;
-		// currentNeighbours[i].printBoard();
 		if(alpha>=beta) return minofneighbour;
 		/*if(depth==1){
 			bool t = checkfive(currentNeighbours[i]);
@@ -440,10 +436,6 @@ while(true){
 	std::getline (std::cin,opponentMove);
 	double timestart= clock();
 
-	std::clock_t start1;
-	double duration;
-	start1 = std::clock();
-
 	updateBoardOpponentMove( opponentID , opponentMove);
 
 if(board.numberOfRings[myID]==5){placingDone=true;} //cout<<"placingDone."<<endl;
@@ -475,11 +467,11 @@ string mymove="";
 		}	
 
 	}
-	bool gameendDone=false;
+//	bool gameendDone=false;
 if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opponentID]<=2) ){
 	int winner,unlucky;
 	cerr<<"GAME OVER BRODAAA"<<endl;
-	gameendDone=true;	
+//	gameendDone=true;	
 	if(board.numberOfRings[myID]<=2){ winner=myID; unlucky=opponentID;}
 	else{ winner=opponentID; unlucky=myID;} 
 //while(true){	cerr<<"GAME OVER BROS: WIN:"<<winner<<" and LOSS:"<<unlucky<<endl;}
@@ -492,10 +484,6 @@ if(placingDone==true && (board.numberOfRings[myID]<=2 || board.numberOfRings[opp
 	double timeelapsed=(timestart - timeend)/(CLOCKS_PER_SEC);
 
 timeAllowed=timeAllowed - timeelapsed;
-	
-	std::clock_t end1;
-	end1 = std::clock();
-	totaltime += end1 - start1;
 if(gameendDone==true)break;
 
 }
