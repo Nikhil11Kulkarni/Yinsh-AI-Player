@@ -1,6 +1,8 @@
 #define __USE_MINGW_ANSI_STDIO 0
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <cstdlib>
 #include <string>
 #include<time.h>
 #include <limits>
@@ -315,23 +317,26 @@ int sumEvaluation=0;
 return sumEvaluation;
 }
 
-int maxValue(Board currentBoard , int depth);
-int minValue(Board currentBoard, int depth);
+int maxValue(Board currentBoard , int depth,int alpha, int beta);
+int minValue(Board currentBoard, int depth,int alpha, int beta);
 
-int minValue(Board currentBoard, int depth){
+int minValue(Board currentBoard, int depth,int alpha, int beta){
 
 	if(depth==depthLimiting){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(opponentID);
 	int v=std::numeric_limits<int>::max();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
-		v=min(v , maxValue(currentNeighbours[i] , depth));
+		int maxofneighbour = maxValue(currentNeighbours[i],depth,alpha,beta);
+		beta = min(beta,maxofneighbour);
+		if(alpha>= beta) return maxofneighbour;
+		v=min(v , maxofneighbour);
 	}
 	return v;
 	
 }
 
-int maxValue(Board currentBoard , int depth){
+int maxValue(Board currentBoard , int depth, int alpha, int beta){
 		//cout<<"maxValue:start"<<endl;
 	if(depth==depthLimiting){int ans=evaluation(currentBoard) ;return ans;} //TERMINAL TEST
 	// cout<<"\n\ncurrentBoard:\n"<<endl;
@@ -340,29 +345,41 @@ int maxValue(Board currentBoard , int depth){
 	int v=std::numeric_limits<int>::min();
 	depth++;
 	for(int i=0;i<currentNeighbours.size();i++){
-		int minofneighbour= minValue(currentNeighbours[i],depth);
+		int minofneighbour= minValue(currentNeighbours[i],depth,alpha,beta);
+		alpha = max(alpha,minofneighbour);
 		// cout<<"\n\ncurrentNeighbours[i]:\n"<<endl;
 		// currentNeighbours[i].printBoard();
+		if(alpha>=beta) return minofneighbour;
+		/*if(depth==1){
+			bool t = checkfive(currentNeighbours[i]);
+			if(t){ansboard = currentNeighbours[i];return minValue(currentNeighbours[i],depth,alpha,beta);}
+		}*/
 		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
-		if(v < minofneighbour)v=minofneighbour;
-		//v= max(v,  minofneighbour);
+		v= max(v,  minofneighbour);
 	}
-//cerr<<"\n\nselected-eval:"<<v<<endl;
 	return v;
 
 }
 
 string minimaxDecision(Board currentBoard){
+	int alpha =  std::numeric_limits<int>::min();
+	int beta = std::numeric_limits<int>::max();
 	int depth=0;
 	if(timeAllowed < 10 || initialStepsWithLessDepth <= 4) depthLimiting=1;
 	else if(timeAllowed > 10) depthLimiting=3;
 	
 	string ans1="";
 		//cout<<"minimaxDecision:start"<<endl;
-	int v=maxValue(currentBoard, depth);
+	int v=maxValue(currentBoard, depth, alpha, beta);
+// 	std::vector<Board> currentNeighbours = currentBoard.getSuccessors(myID);
 // 	cout<<"minimaxDecision:got v:size"<<currentNeighbours.size()<<endl;
-		//return action string here.
-	//}
+// 	for(int i=0;i<currentNeighbours.size();i++){
+// 		cout<<i<<":11minimaxDecision:got v:"<<v<<endl;
+// 		if(evaluation(currentNeighbours[i])==v){
+// 		cout<<"yippie"<<endl; 
+// 		}
+// 		//return action string here.
+// 	}
 //	return ans1;
 // cout<<"\n\nansboard:\n";
 // ansboard.printBoard();

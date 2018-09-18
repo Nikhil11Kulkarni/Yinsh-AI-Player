@@ -234,7 +234,6 @@ function BlackGuides(xcoord,ycoord,asign,bsign,guide){
 
 function SelectRings(xcoord,ycoord){
 	if(positions[xcoord][ycoord].piece==Math.pow(-1,current_player)*2){
-		console.log("SelectRings")
 		guide_ctx.beginPath();
 		guide_ctx.strokeStyle="black";
 		guide_ctx.arc(positions[xcoord][ycoord].x,positions[xcoord][ycoord].y,altitude*3/10,0,Math.PI*2);
@@ -452,8 +451,6 @@ function HighlightRow(state=3){
 
 function MoveRings(xcoord,ycoord){
 	if(positions[xcoord][ycoord].guide==true){
-		console.log("MoveRings")
-		console.log(xcoord, ycoord)
 		guide_ctx.clearRect(0, 0, guide_canvas.width, guide_canvas.height);
 		RemoveBlackGuides(player[current_player].current_ring[0],player[current_player].current_ring[1],xcoord,ycoord,1,1);
 		RemoveBlackGuides(player[current_player].current_ring[0],player[current_player].current_ring[1],xcoord,ycoord,1,0);
@@ -495,7 +492,6 @@ function RemoveRow(x, y, state=4){
     if(x == null || y == null){
         return false;
     }
-
 	var row_count=0;
 	var select_row=-1;
 	for(var i=0;i<player[current_player].five_row.length;i++){
@@ -521,7 +517,6 @@ function RemoveRowEnd(startX, startY, endX, endY, state=4){
     if(startX == null || startY == null){
         return false;
     }
-
 	var row_count=0;
 	var select_row=-1;
 	for(var i=0;i<player[current_player].five_row.length;i++){
@@ -538,9 +533,7 @@ function RemoveRowEnd(startX, startY, endX, endY, state=4){
          
         }
 	}
-
-	console.log('Row Count '+row_count);
-	if(row_count==1){
+	if(row_count>=1){
         var removeList = new Array();
         removeList.push(select_row);
 
@@ -559,21 +552,14 @@ function RemoveRowEnd(startX, startY, endX, endY, state=4){
 					if(player[current_player].five_row[i][j][0]==player[current_player].five_row[select_row][k][0]
 						&&player[current_player].five_row[i][j][1]==player[current_player].five_row[select_row][k][1]){
                             removeList.push(i);
-							//player[current_player].five_row.splice(i,1);
 					}
 				}
 			}
 		}
-
-        var sortRemList = removeList.sort(); // sorts in ascending order
-        console.log(sortRemList);
-        for(i=removeList.length; i>=0; i--){
-            player[current_player].five_row.splice(sortRemList[i], 1)
-        }
-		//player[current_player].five_row.splice(select_row,1);
+        player[current_player].five_row.length = 0
+		CheckRows();
 		required_move=state;
-
-		HighlightRow();
+		guide_ctx.clearRect(0, 0, guide_canvas.width, guide_canvas.height);
         return true
 	} else {
         return false
@@ -596,6 +582,7 @@ function RemoveRing(xcoord,ycoord,state=4){
 		positions[xcoord][ycoord].piece=0;
 		if(player[current_player].rings_won==3){
 			required_move=5;
+			SwitchPlayer();
 		}
 		else if(player[current_player].five_row.length==0){
 			if(state!=7){
@@ -605,13 +592,11 @@ function RemoveRing(xcoord,ycoord,state=4){
 				required_move=1;
 			}
 			else{
-				required_move=3;
-				HighlightRow();
+				HighlightRow(6);
 			}
 		}
 		else{
-			required_move=3;
-				HighlightRow();
+			HighlightRow();
 		}
         return true
 	} else {
