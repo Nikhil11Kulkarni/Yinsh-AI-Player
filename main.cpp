@@ -317,6 +317,72 @@ int sumEvaluation=0;
 return sumEvaluation;
 }
 
+
+bool checkfive(Board b){
+
+	int ringcolor = myID;
+	bool ans=false;
+	int mcolor = ringcolor+2;
+	for(int j = 0; j<11;j++){
+		for(int i= 0; i<=6;i++ ){
+			if(b.boardArray[j][i] == mcolor && b.boardArray[j][i+1] == mcolor && b.boardArray[j][i+2] == mcolor && b.boardArray[j][i+3] == mcolor  
+				&& b.boardArray[j][i+4] == mcolor){
+				// do something-- make all pos of markers empty and valid-true; remove one ring and update things in the board-- RS 1 2 RE 4 16 X 3 4
+
+				ans =true;
+
+			}
+		}
+	}
+
+	for(int j = 0; j<11;j++){
+		for(int i= 0; i<=6;i++ ){
+			if(b.boardArray[i][j] == mcolor && b.boardArray[i+1][j] == mcolor && b.boardArray[i+2][j] == mcolor && b.boardArray[i+3][j] == mcolor  
+				&& b.boardArray[i+4][j] == mcolor){
+				// do something.
+				ans=true;
+			
+			}
+		}
+	}
+
+	for(int k = 4; k>=1;k--){
+		for (int i = 0; i<7-k ;i++){
+			if(b.boardArray[k+i][i] == mcolor && b.boardArray[k+i+1][i+1] == mcolor && b.boardArray[k+i+2][i+2] == mcolor && b.boardArray[k+i+3][i+3] == mcolor  
+				&& b.boardArray[k+i+4][i+4] == mcolor){
+				
+				ans =true;
+			}
+		}  
+	}	
+
+
+	// for line going to up-right in the middle. has to be written
+	for (int i=1;i<=5;i++){
+		if(b.boardArray[i][i] == mcolor && b.boardArray[i+1][i+1] == mcolor && b.boardArray[i+2][i+2] == mcolor && b.boardArray[i+3][i+3] == mcolor  
+				&& b.boardArray[i+4][i+4] == mcolor){
+				// do something.
+				ans = true;
+
+			}
+	}
+
+
+
+	for(int k = 4; k>=1;k--){
+		for (int i = 0; i<7-k ;i++){
+			if(b.boardArray[i][k+i] == mcolor && b.boardArray[i+1][k+i+1] == mcolor && b.boardArray[i+2][k+i+2] == mcolor && b.boardArray[i+3][k+i+3] == mcolor  
+				&& b.boardArray[i+4][k+i+4] == mcolor){
+				// do something.
+				ans = true;
+			
+			}
+		}  
+	}
+
+return ans;
+}
+
 int maxValue(Board currentBoard , int depth,int alpha, int beta);
 int minValue(Board currentBoard, int depth,int alpha, int beta);
 
@@ -346,10 +412,11 @@ int maxValue(Board currentBoard , int depth, int alpha, int beta){
 		int minofneighbour= minValue(currentNeighbours[i],depth,alpha,beta);
 		alpha = max(alpha,minofneighbour);
 		if(alpha>=beta) return minofneighbour;
-		/*if(depth==1){
+		if(depth==1){
 			bool t = checkfive(currentNeighbours[i]);
+			cerr<<"five truth is"<<t<<endl;
 			if(t){ansboard = currentNeighbours[i];return minValue(currentNeighbours[i],depth,alpha,beta);}
-		}*/
+		}
 		if(depth==1 && minofneighbour > v){ansboard = currentNeighbours[i];}
 		v= max(v,  minofneighbour);
 	}
