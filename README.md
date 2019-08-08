@@ -1,3 +1,6 @@
+#Yinsh game
+Yinsh is a two-player strategy board game.
+
 # Yinsh-AI-Player
 Yinsh Player based on AI with the adversarial search algorithm (mini-max and alpha beta pruning), which arise in sequential deterministic adversarial situations.
 
